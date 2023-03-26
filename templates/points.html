@@ -111,10 +111,7 @@
   font-family: "Montstreet" sans-serif;
   color: #8E6FB2;
   height: 25%;
-}
-a {
-  color: #8E6FB2;
-  text-decoration: none;
+  
 }
 .all-users{
   background-color: rgb(212, 197, 231,33%);
@@ -144,6 +141,56 @@ a {
   height: 25%;
   margin-top: 5%;
 }
+
+.main-container {
+    grid-area: main;
+    overflow-y: auto;
+    padding: 20px 20px;
+    margin-left: 3%;
+  }
+  .add-btn {
+    /* Rectangle 45 */
+    padding: 1vh;
+    text-align: center;
+    position: absolute;
+    width: 22vh;
+    height: 6vh;
+    left: 85%;
+    top: 15%;
+    background: #C1AFD2;
+    border-radius: 10px;
+  }
+  .create-date {
+    /* Rectangle 46 */
+    position: absolute;
+    width: 26vh;
+    height: 6vh;
+    top: 20%;
+    padding: 1vh;
+    background: rgba(142, 111, 178, 0.49);
+    border-radius: 50px;
+  }
+  .status {
+    /* Rectangle 47 */
+
+    position: absolute;
+    width: 26vh;
+    height: 6vh;
+    left: 37%;
+    top: 20%;
+    padding: 1vh;
+    background: rgba(142, 111, 178, 0.49);
+    border-radius: 50px;
+
+  }
+  .tbl {
+    position: absolute;
+    width: 70%;
+    top: 23%;
+    margin-left: 23%;
+
+}
+
 
     </style>
      <body>
@@ -207,63 +254,60 @@ a {
                 </li>
             </ul>
         </aside>
-        
-        <!--Main-->
-     <div class="all-cards row justify-content-space-around">
-        <div class="rewards-card col-md-4 m-4">
-          <span class="material-icons-outlined" style="font-size: xxx-large;color: #8E6FB2; ">people</span>
-            <h5>All users</h5>    
-        </div> 
-     </div>
-     <div class="all-cards row justify-content-space-around">
-      <div class="rewards-card col-md-4 m-4">
-        <span class="material-icons-outlined" style="font-size: xxx-large;color: #8E6FB2;">add</span>
-        
-        <a href="./rewards.html"><h5>Add rewards</h5> </a>   
-      </div> 
-   </div>
-   <div class="all-cards row justify-content-space-around">
-    <div class="rewards-card col-md-4 m-4">
-      <span class="material-icons-outlined" style="font-size: xxx-large;color: #8E6FB2;">add</span>
-       <a href="./points.html"><h5>Add point</h5> </a>   
-    </div> 
-   </div>
-      <div class="all-users row justify-content-space-around">
-        <div class=" col-md-6 ">
-        <span class="material-icons-outlined " style="font-size: xx-large;color: #8E6FB2; ">people</span>
-           </div>
-        <div class=" col-md-6 ">
-          <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">Action</button>
-              <button class="dropdown-item" type="button">Another action</button>
-              <button class="dropdown-item" type="button">Something else here</button>
-            </div>
-          </div>  
-      </div> 
-      <div class="all-cards row justify-content-space-around">
-        <div class="users-card col-md-4 ">
-          <img src="../assets/avatar.png"height="55" width="55">
-          <div class="text d-block m-3 ">
-            <h5 >Noura Saad</h5>  
-            <p>300 Points</p>
-            <img src="../assets/coin.png" height="20" width="20">
-          </div>
-        </div> 
-      </div>
-        <div class="all-cards row justify-content-space-around">
-          <div class="users-card col-md-4 ">
-            <img src="../assets/avatar.png"height="55" width="55">
-            <div class="text d-block m-3 ">
-              <h5 >Hadeel Alnasser</h5>  
-              <p>50 Points</p>
-              <img src="../assets/coin.png" height="20" width="20">
-            </div>
-          </div> 
-     </div>
-      </div>
-      
+       
 
+        <!-- Main -->
+        <main class="main-container">
+          <div class="main-title">
+              <p class="font-weight-bold">POINTS</p>
+            </div>
+            <div class="add-btn">
+              <p>Add point</p>
+            </div>
+            <div class="create-date">
+              <p >Date: All time</p>
+            </div>
+            <div class="status">
+              <p >Status: Active/Inactive</p>
+            </div>
+
+          </div>
+          
+        <div class="tbl row">
+        <table class="table table-striped mt-5 ">
+            <thead>
+              <tr>
+                <th scope="col">User name/number</th>
+                <th scope="col">Points</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+                <th><span class="material-icons-outlined">settings</span> </th> 
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        </div>
