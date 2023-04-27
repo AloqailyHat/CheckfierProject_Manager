@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Loyality page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #FFFFFF;
+        color: #666666;
+        font-family: "Montstreet" sans-serif;
+      }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr 1fr;
+        grid-template-rows: 0.2fr 3fr;
+        grid-template-areas:
+        "sidebar header header header"
+        "sidebar main main main";
+        height: 100vh;
+  }
+  
+  
+  /* ---------- HEADER ---------- */
+  
+  .header {
+    grid-area: header;
+    height: 70px;
+    background-color: #E9E5EE;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0 6px 7px -4px rgba(172, 157, 169, 0.5);
+  }
+
+  .menu-icon {
+   display: none;
+}
+  
+  
+  /* ---------- SIDEBAR ---------- */
+  
+  #sidebar {
+    grid-area: sidebar;
+    height: 100%;
+    background-color: #8E6FB2;
+    color: #E9E5EE;
+    overflow-y: auto;
+    -webkit-transition: all 0.5;
+    transition: all 0.5;
+  }
+
+  .sidebar-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 20px 20px;
+  margin-bottom: 30px;
+}
+
+.sidebar-title > span {
+  display: none;
+}
+
+.sidebar-brand {
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sidebar-list {
+  padding: 0;
+  margin-top: 15px;
+  list-style-type: none;
+}
+
+.sidebar-list-item {
+  padding: 20px 20px 20px 20px;
+}
+
+.sidebar-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.sidebar-list-item > a {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+.sidebar-responsive {
+  display: inline !important;
+  position: absolute;
+  z-index: 12 !important;
+}
+/* Main style */
+
+.rewards-card{
+  background-color: rgb(212, 197, 231,33%);
+  width: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montstreet" sans-serif;
+  color: #8E6FB2;
+  height: 25%;
+  
+}
+.all-users{
+  background-color: rgb(212, 197, 231,33%);
+  /* Rectangle 31 */
+  display: flex;
+  box-sizing: border-box;
+  left: 21%;
+  top: 42%;
+  position: absolute;
+  width: 75%;
+  height: 10vh;
+  border: 1px solid #E1DDDD;
+  border-radius: 30px;
+  align-items: center;
+}
+.dropdown{
+  float: right;
+ 
+}
+.users-card{
+  background-color: rgb(212, 197, 231,33%);
+  width: 45vh;
+  display: flex;
+  align-items: center;
+  font-family: "Montstreet" sans-serif;
+  color: #8E6FB2;
+  height: 25%;
+  margin-top: 5%;
+}
+
+.main-container {
+    grid-area: main;
+    overflow-y: auto;
+    padding: 20px 20px;
+    margin-left: 3%;
+  }
+  .add-btn {
+    /* Rectangle 45 */
+    padding: 1vh;
+    text-align: center;
+    position: absolute;
+    width: 22vh;
+    height: 6vh;
+    left: 85%;
+    top: 15%;
+    background: #C1AFD2;
+    border-radius: 10px;
+  }
+  .create-date {
+    /* Rectangle 46 */
+    position: absolute;
+    width: 26vh;
+    height: 6vh;
+    top: 20%;
+    padding: 1vh;
+    background: rgba(142, 111, 178, 0.49);
+    border-radius: 50px;
+  }
+  .status {
+    /* Rectangle 47 */
+
+    position: absolute;
+    width: 26vh;
+    height: 6vh;
+    left: 37%;
+    top: 20%;
+    padding: 1vh;
+    background: rgba(142, 111, 178, 0.49);
+    border-radius: 50px;
+
+  }
+  .tbl {
+    position: absolute;
+    width: 70%;
+    top: 23%;
+    margin-left: 23%;
+
+}
+
+
+    </style>
+     <body>
+        <div class="grid-container">
+    
+          <!-- Header -->
+          <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+              </div>
+              <div class="header-left">
+                <span class="material-icons-outlined">search</span>
+              </div>
+              <div class="header-right">
+                <span class="material-icons-outlined">notifications</span>
+                <span class="material-icons-outlined">account_circle</span>
+              </div>
+          </header>
+          <!-- End Header -->
+    
+          <!-- Sidebar -->
+          <aside id="sidebar">
+          <!-- End Sidebar -->
+          <div class="sidebar-title">
+          <div class="sidebar-brand ">
+                <span class="material-img"> <img src="../assets/logo.jpg"height="55" width="55" alt="Checkfier"></span>
+                <div class="h_line"></div>
+    
+              </div>
+              <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">dashboard</span> Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">
+                            card_membership</span> Loyality
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">campaign</span> Campaigns
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">settings</span>  Settings
+                    </a>
+                </li>
+            </ul>
+        </aside>
+       
+
+        <!-- Main -->
+        <main class="main-container">
+          <div class="main-title">
+              <p class="font-weight-bold">POINTS</p>
+            </div>
+            <div class="add-btn">
+              <p>Add point</p>
+            </div>
+            <div class="create-date">
+              <p >Date: All time</p>
+            </div>
+            <div class="status">
+              <p >Status: Active/Inactive</p>
+            </div>
+
+          </div>
+          
+        <div class="tbl row">
+        <table class="table table-striped mt-5 ">
+            <thead>
+              <tr>
+                <th scope="col">User name/number</th>
+                <th scope="col">Points</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+                <th><span class="material-icons-outlined">settings</span> </th> 
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        </div>
