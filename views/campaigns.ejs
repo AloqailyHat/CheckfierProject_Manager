@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>   
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -282,7 +282,7 @@
     padding: 1vh;
     text-align: center;
     position: absolute;
-    margin-top: -25px;
+    margin-top: -12px;
     margin-left: -70px;
     width: 22vh;
     height: 6vh;
@@ -306,13 +306,46 @@
   font-size: 20px;
   font-weight: 700;
 }
-
+.add-camp {
+  margin-top: 5px;
+}
 .addcam {
   text-decoration: none;
   color: #fff;
-
+  
 }
-
+#table-form {
+  display: none;
+}
+th {
+  height: 50px;
+}
+.form-popup {
+  display: none;
+  position: fixed;
+  width: 520px;
+  bottom: 17%;
+  right: 5%;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background-color: #FFFFFF;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgb(100, 98, 98);
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+#submit{
+    cursor: pointer;
+    background-color:<%= store.color %>;
+    width: 100%;
+    color: #FFFFFF;
+}
 
    </style>
   </head>
@@ -349,31 +382,31 @@
       </div>
       <ul class="sidebar-list">
           <li class="sidebar-list-item">
-              <a href="/dashboard" target="_blank">
+              <a href="/dashboard">
                   <span class="material-icons-outlined">dashboard</span> Dashboard
               </a>
           </li>
           <li class="sidebar-list-item">
-              <a href="/loyality" target="_blank">
+              <a href="/loyality">
                   <span class="material-icons-outlined">
                       card_membership</span> Loyality
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
+              <a href="/campaigns">
                   <span class="material-icons-outlined">campaign</span> Campaigns
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
+              <a href="/queseval">
                   <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
+              <a href="/storeset">
                   <span class="material-icons-outlined">settings</span>  Settings
               </a>
           </li>
@@ -384,7 +417,7 @@
         <div class="main-title">
             <p class="font-weight-bold">Campaigns</p>
           </div>
-          <div class="add-camp">
+          <div class="add-camp" onclick="show_hide()">
             <p> <a href="#" class="addcam"> Add campaign </a> </p>
           </div>
           <div class="dropdown">
@@ -397,6 +430,21 @@
           </div>  
         </div>
         
+         <!-- Form -->
+        <!-- Form -->
+        <form class="form-popup" id="table-form" action="/newCamp" method="POST" enctype="multipart/form-data">
+          <label for="image1">Campaign image 1: </label><br>
+          <input type="file" id="image1" name="image1" accept="image/png, image/jpg"><br>
+          <label for="image2">Campaign image 2: </label><br>
+          <input type="file" id="image2" name="image2" accept="image/png, image/jpg"><br>
+          <label for="type">Campaign type:</label><br>
+          <input type="text" name="type" id="type"><br>
+          <label for="name">Campaign name:</label><br>
+          <input id="name1" type="text" name="name"><br>
+          <button id="submit">Save</button>
+        </form>
+
+            
       <div class="tbl row">
       <table class="table table-striped mt-5 ">
           <thead>
@@ -470,4 +518,14 @@
     <!-- Custom JS -->
    
   </body>
+  <script>
+     function show_hide() {
+        var x = document.getElementById("table-form");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+  </script>
 </html>

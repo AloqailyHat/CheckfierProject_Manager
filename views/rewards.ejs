@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> rewards ....
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -242,6 +242,7 @@ input {
 #btn{
     cursor: pointer;
     background-color:<%= store.color %>;
+    color: #ffffff;
 }
 table, td, th {
   border: 1px solid black;
@@ -265,8 +266,8 @@ th {
   display: none;
   position: fixed;
   width: 520px;
-  bottom: 0;
-  right: 15px;
+  bottom: 15%;
+  right: 10%;
   border: 3px solid #f1f1f1;
   z-index: 9;
   background-color: #FFFFFF;
@@ -306,7 +307,7 @@ th {
         <!-- End Sidebar -->
         <div class="sidebar-title">
         <div class="sidebar-brand">
-          <img src="<%= store.logo %>" id="_logo">
+          <img src="<%= store.logo %>" id="_logo" width="55" height="55">
           <h2 id="name"><%= store.name %></h2>
           </span>
           <div class="h_line"></div>
@@ -316,31 +317,31 @@ th {
           </div>
           <ul class="sidebar-list">
               <li class="sidebar-list-item">
-                  <a href="/dashboard" target="_blank">
+                  <a href="/dashboard" >
                       <span class="material-icons-outlined">dashboard</span> Dashboard
                   </a>
               </li>
               <li class="sidebar-list-item">
-                  <a href="/loyality" target="_blank">
+                  <a href="/loyality">
                       <span class="material-icons-outlined">
                           card_membership</span> Loyality
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/campaigns" target="_blank">
+                  <a href="/campaigns">
                       <span class="material-icons-outlined">campaign</span> Campaigns
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/queseval" target="_blank">
+                  <a href="/queseval">
                       <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/storeset" target="_blank">
+                  <a href="/storeset">
                       <span class="material-icons-outlined">settings</span>  Settings
                   </a>
               </li>
@@ -368,9 +369,9 @@ th {
           <div class="container">
             <form class="form-popup" id="table-form" method="post" action="/">
             <label for="rname">Name</label><br>
-            <input type="text" name="rname" id="name">
+            <input type="text" name="name" id="rname">
             <label for="points">Reward type</label>
-            <input type="text" name="rtype" id="type">
+            <input type="text" name="type" id="rtype">
             <label for="date">Create date</label>
             <input type="date" name="date" id="date">
             <label for="points">Points cost</label>
@@ -408,12 +409,12 @@ th {
 
           function addReward() {
 
-            const name = document.getElementById('name').value;
-            const type = document.getElementById('type').value;
+            const name = document.getElementById('rname').value;
+            const type = document.getElementById('rtype').value;
             const date = document.getElementById('date').value;
             const points = document.getElementById('points').value;
             const data = { name, type, date, points };
-            fetch('http://localhost:8080/rewards', {
+            fetch('http://localhost:8080/rewards',{
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

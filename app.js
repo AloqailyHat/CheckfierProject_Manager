@@ -132,6 +132,7 @@ app.use(getStoreData);
 
 
   //routering of essential view 
+
 app.get('/essential', function(req,res){
   const store = res.locals.store;
   res.render('essential',{store: store});
@@ -157,6 +158,7 @@ app.get('/loyality', function(req,res){
   res.render('loyality',{store: store});
 })
   //routering of queseval view 
+
 app.get('/queseval', function(req,res){
   const store = res.locals.store ;
 
@@ -219,6 +221,11 @@ app.get('/notifUser', function(req,res){
     res.render('notifAdmin');
     
     });
+app.get('/stat', function(req,res){
+  const store = res.locals.store ;
+  res.render('stat',{store: store});
+})
+
 // Upload image api
 
 app.post('/upload', upload.single('logo'), function(req, res) {
