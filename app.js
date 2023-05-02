@@ -175,25 +175,33 @@ app.get('/allusers', function(req,res){
 
 //routing to notification settings interface
 app.get('/notif', (req, res) => {
-
   res.render('notif');
   
   });
 
 //routing to langauge settings interface
   app.get('/language', (req, res) => {
-
     res.render('language');
     
     });
 
 //routing to personal settings interface
   app.get('/settings', (req, res) => {
-
       res.render('settings');
       
       });
+
+  //routering of notif-admin settings 
+  app.get('/notifAdmin', (req, res) => {
+    res.render('notifAdmin');
     
+    });
+    
+  //routering of notif-user settings 
+  app.get('/notifUser', (req, res) => {
+    res.render('notifUser');
+    
+    });
 /////////////////
 
 // Upload image api
