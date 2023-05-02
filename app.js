@@ -214,6 +214,11 @@ app.get('/notifUser', function(req,res){
   res.render('notifUser',{store: store});
 })
  
+  //routering of notif-admin settings 
+  app.get('/notifAdmin', (req, res) => {
+    res.render('notifAdmin');
+    
+    });
 // Upload image api
 
 app.post('/upload', upload.single('logo'), function(req, res) {
