@@ -40,8 +40,8 @@ mongoose.connect(mongURL,{
     console.log("error", err)
  })
 
-  //all users api //
- app.get('/allUsers', async (req, res) => {
+  //show users api //
+ app.get('/showUsers', async (req, res) => {
    try {
      const users = await User.find();
      res.send(users);
@@ -85,7 +85,9 @@ mongoose.connect(mongURL,{
      reward.points = req.body.points;
 
      await reward.save();
+     console.log("reward saved:",reward);
      res.send(reward);
+     console.log(reward);
    } catch (error) {
      res.status(500).send({ message: error.message });
    }
@@ -100,7 +102,6 @@ const storage = multer.diskStorage({
       cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-
 // Initialize Multer upload
 const upload = multer({ storage: storage });
 // Serve static files from the public directory
@@ -110,115 +111,135 @@ app.use(express.static(path.join(__dirname, 'public')));
 async function getStoreData(req, res, next) {
   try {
     const store = await Store.findOne().sort({ createdAt: -1 });
-    console.log('Store data retrieved successfully:', store);
-    res.locals.store = store;
+    console.log('Store data retrieved successfully:');
+
+    // Decode the logo image data from base64 to binary data
+    const binaryData = Buffer.from(store.logo, 'base64');
+    // Convert the binary data to a data URL
+    const dataUrl = `data:image/png;base64,${binaryData.toString('base64')}`;
+
+    // Add the logo data URL to the store object
+    const storeWithLogo = { ...store.toObject(), logo: dataUrl };
+    res.locals.store = storeWithLogo;
     next();
   } catch (error) {
     console.error('Error fetching store data', error);
     res.redirect('/error');
   }
-};
+}
 // Use the middleware function for all routes that need to access store data
 app.use(getStoreData);
 
 
+  //routering of essential view 
 app.get('/essential', function(req,res){
   const store = res.locals.store;
   res.render('essential',{store: store});
 })
+  //routering of storeset view
 app.get('/storeset', function(req,res){
   const store = res.locals.store ;
   res.render('storeset',{store: store});
 });
+  //routering of main view 
 app.get('/', function(req,res){
   const store = res.locals.store ;
   res.render('dashboard',{store: store});
 })
+  //routering of dashboard 
 app.get('/dashboard', function(req,res){
   const store = res.locals.store ;
   res.render('dashboard',{store: store});
 })
+  //routering of loyality view
 app.get('/loyality', function(req,res){
   const store = res.locals.store ;
   res.render('loyality',{store: store});
 })
-app.get('/campaigns', function(req,res){
-  const store = res.locals.store ;
-
-  res.render('campaigns',{store: store});
-})
+  //routering of queseval view 
 app.get('/queseval', function(req,res){
   const store = res.locals.store ;
 
   res.render('queseval',{store: store});
 })
+  //routering of advertisement settings 
 app.get('/advertisement', function(req,res){
   const store = res.locals.store ;
   res.render('advertisement',{store: store});
 })
-app.get('/campaignset', function(req,res){
+  //routering of campains view 
+app.get('/campaigns', function(req,res){
   const store = res.locals.store ;
-  res.render('campaignset',{store:store});
+  const campaigns = res.locals.campaigns;
+  res.render('campaigns',{store, campaigns});
 })
+  //routering of rewards view 
 app.get('/rewards', function(req,res){
   const store = res.locals.store ;
   res.render('rewards',{store: store});
 })
+  //routering of points view 
 app.get('/points', function(req,res){
   const store = res.locals.store ;
   res.render('points',{store: store});
 })
+  //routering of users view 
 app.get('/allusers', function(req,res){
   const store = res.locals.store ;
   res.render('allusers',{store: store});
 })
-
-//routing to notification settings interface
-app.get('/notif', (req, res) => {
-  res.render('notif');
-  
-  });
-
-//routing to langauge settings interface
-  app.get('/language', (req, res) => {
-    res.render('language');
-    
-    });
-
-//routing to personal settings interface
-  app.get('/settings', (req, res) => {
-      res.render('settings');
-      
-      });
-
+  //routering of notification settings 
+app.get('/notif', function(req,res){
+  const store = res.locals.store ;
+  res.render('notif',{store: store});
+})
+  //routering of language settings 
+app.get('/language', function(req,res){
+  const store = res.locals.store ;
+  res.render('language',{store: store});
+})
+  //routering of settings settings 
+app.get('/sttings', function(req,res){
+  const store = res.locals.store ;
+  res.render('sttings',{store: store});
+})
   //routering of notif-admin settings 
-  app.get('/notifAdmin', (req, res) => {
-    res.render('notifAdmin');
-    
-    });
-    
+app.get('/notifAdmin', function(req,res){
+  const store = res.locals.store ;
+  res.render('notifAdmin',{store: store});
+})
   //routering of notif-user settings 
-  app.get('/notifUser', (req, res) => {
-    res.render('notifUser');
-    
-    });
-/////////////////
-
+app.get('/notifUser', function(req,res){
+  const store = res.locals.store ;
+  res.render('notifUser',{store: store});
+})
+ 
 // Upload image api
+
 app.post('/upload', upload.single('logo'), function(req, res) {
   const store = new Store({
       name: req.body.storeName,
-      logo: '/uploads/' + req.file.filename,
+      logo: '',
       color: req.body.storeColor
   });
 
-  store.save().then(() => {
-      res.redirect('/essential');
-  }).catch((error) => {
-      console.error('Error saving store data', error);
-      res.redirect('/error');
+  fs.readFile(req.file.path, function(err, data) {
+    if (err) {
+      console.error('Error reading logo image:', err);
+      res.status(500).send('Error reading logo image');
+    } else {
+      const base64Data = Buffer.from(data).toString('base64');
+      store.logo = base64Data;
+      store.save().then(() => {
+        res.redirect('/essential');
+      }).catch((error) => {
+        console.error('Error saving store data', error);
+        res.redirect('/error');
+      });
+    }
   });
 });
+
 
 app.get('/store', function(req, res) {
   if (!res.locals.store) {
@@ -228,65 +249,104 @@ app.get('/store', function(req, res) {
 });
 
 
-// Adds
-
-const add = multer({ dest: 'advertisement/' });
-
-app.post('/add', add.single('image'), function(req, res) {
+//add advertisement api
+const ad = multer();
+app.post('/ad', ad.single('image'), function(req, res) {
   const { type, link } = req.body;
-  const image = req.file;
+  const imageData = req.file.buffer;
+
+  // Convert the image data to a base64-encoded string
+  const base64Image = imageData.toString('base64');
 
   // Save the data to the database
   const newAd = new Ad({
     type,
     link,
-    image: {
-      data: fs.readFileSync(image.path),
-      contentType: image.mimetype
-    }
+    image: base64Image
   });
 
   newAd.save()
-  .then(() => {
-    console.log("done")
-    res.send("Ad was added successfully ✔");
-  })
-  .catch(err => {
-    console.error(err);
-    res.sendStatus(500);
-  });
-
+    .then(() => {
+      console.log("done", newAd)
+      res.send("<script>alert('Ad was added successfully ✔'); window.location.href='/advertisement';</script>");
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 });
 
-// Adds
 
-const addCam = multer({ dest: 'campaigns/' });
 
-app.post('/new', addCam.single('image'), function(req, res) {
-  const { type, name } = req.body;
-  const image = req.file;
 
-  // Save the data to the database
-  const newCampaign = new Campaign({
-    type,
-    name,
-    image: {
-      data: fs.readFileSync(image.path),
-      contentType: image.mimetype
+
+
+
+
+// Add campaigns
+const addCamp = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'campaigns/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+}); 
+
+const uploadCamp = multer({ storage: addCamp }).fields([
+  { name: 'image1', maxCount: 1 },
+  { name: 'image2', maxCount: 1 }
+]);
+
+app.post('/newCamp', function(req, res, next) {
+  uploadCamp(req, res, function (err) {
+    if (err) {
+      // Handle the error
+      return next(err);
     }
-  });
+    
+    const { type, name } = req.body;
+    const image1 = req.files['image1'][0];
+    const image2 = req.files['image2'][0];
 
-  newCampaign.save()
-  .then(() => {
-    console.log("done")
-    res.send("Campaign was added successfully ✔");
-  })
-  .catch(err => {
-    console.error(err);
-    res.sendStatus(500);
-  });
+    // Save the data to the database
+    const newCampaign = new Campaign({
+      type,
+      name,
+      image1: image1.path,
+      image2: image2.path
+    });
+
+    newCampaign.save()
+    .then(() => {
+      console.log("done",newCampaign)
+      res.send("<script>alert('Campaign was added successfully ✔'); window.location.href='/campaigns';</script>");
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 
 });
+});
+
+// show campaigns 
+app.use(function(req, res, next) {
+  Campaign.find({})
+    .then(campaigns => {
+      res.locals.campaigns = campaigns;
+      console.log(campaigns)
+      next();
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    });
+});
+
+
+
+
 
 
  
