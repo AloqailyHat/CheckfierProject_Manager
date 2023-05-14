@@ -14,7 +14,9 @@ const rewardSchema = new mongoose.Schema({
     },
     points: {
       type: Number,
-      required: true
+      required: true,
+      index: true
+
     }
   },{collation: 'rewards'});
   

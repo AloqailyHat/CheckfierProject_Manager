@@ -366,56 +366,6 @@
       font-size: 20px;
     }
 
-    .personal-sett {
-      background-color: #FFFFFF;
-      width:135px;
-      height:35px;
-      margin: 400px 0px 52px 900px;
-      color: #1E1717;
-      text-align: center;
-      color: #1E1717;
-      border-radius:10px;
-      border-style: ridge;
-      border-color: #FDBD06;
-      line-height: 30px;  
-    }
-
-    
-    .info_form {
-      border: 1px solid #f1f1f1;
-      background-color: #FFFFFF;
-      width:95% ;
-      margin-left: 10px;
-  }
- 
-  #store_name {
-      border-color: <%= store.color %>;
-      border-radius: 10px;
-      width: 75%;
-      margin: 15px 0px 0px 45px;
-  }
-  label {
-      margin: 20px 0px 15px 60px;
-      font-size: 20px;
-      font-weight: 600;
-  }
-  #image_input {
-      margin: 15px 0px 0px 60px;
-      width: 100px;
-  }
-  #display_image {
-      display: flex;
-      justify-self: center;
-      align-self: center;
-      height: 200px;
-      width:200px ;
-      border: 1px solid #f1f1f1;
-      margin-left: 60px;
-  }
-  
-  #color {
-    margin-left: 60px;
-  }
   #submit {
       background-color: #FFFFFF;
       width:100px;
@@ -429,12 +379,35 @@
       line-height: 30px;
   }
  
-  .notif-set {
-     border: 1px solid #f1f1f1;
-    background-color: #FFFFFF;
-    width:95% ;
-    margin-left: 7px;
-  }
+
+#sms_content {
+  border-color: <%= store.color %>;
+  border-radius: 10px;
+  width: 65%;
+  margin: 5px 0px 0px 63px;
+}
+
+#submit {
+  background-color: #FFFFFF;
+  width:100px;
+  height:32px;
+  margin: 40px 0px 15px 340px;
+  color: #1E1717;
+  text-align: center;
+  border-radius:10px;
+  border-style: solid;
+  border-color: <%= store.color %>;
+  line-height: 30px;
+}
+
+label {
+  margin: 20px 0px 15px 60px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+
+
    </style>
   </head>
   <body>
@@ -470,31 +443,31 @@
       </div>
       <ul class="sidebar-list">
           <li class="sidebar-list-item">
-              <a href="/" target="_blank">
+              <a href="/" target="_self">
                   <span class="material-icons-outlined">dashboard</span> Dashboard
               </a>
           </li>
           <li class="sidebar-list-item">
-              <a href="/Loyality" target="_blank">
+              <a href="/Loyality" target="_self">
                   <span class="material-icons-outlined">
                       card_membership</span> Loyality
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
+              <a href="/campaigns" target="_self">
                   <span class="material-icons-outlined">campaign</span> Campaigns
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
+              <a href="/queseval" target="_self">
                   <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
+              <a href="/storeset" target="_self">
                   <span class="material-icons-outlined">settings</span>  Settings
               </a>
           </li>
@@ -504,11 +477,20 @@
    <main class="main-container">
    
     <div class="main-title">
-        <p class="font-weight-bold">Notification System</p>
+        <p class="font-weight-bold"> User Notification System</p>
       </div> 
       <br>
       <br>
-      
+      <div class="user-set">
+        <form action="/add" method="POST" enctype="multipart/form-data">
+         
+          <label for="sms-notif" >SMS notification</label><br>
+          <input type="text" name="type" id="sms_content"><br>
+          <label for="color">Content link</label><br>
+          <input id="sms_content" type="text" name="sms-link"><br>
+          <button id="submit">Send</button>
+        </form>
+      </div>
       </div>
       
 <br>
@@ -520,7 +502,6 @@
   </script>
 </body>
 </html>
-
 
 
 

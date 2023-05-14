@@ -22,11 +22,15 @@ mongoose.connect(mongURL,{
  require('./models/Store')
  require('./models/Adds')
  require('./models/Campaigns')
+ require('./models/Rating')
+
  const User = mongoose.model("user")
  const Reward = mongoose.model("reward")
  const Store = mongoose.model("store")
  const Ad = mongoose.model("ad")
  const Campaign = mongoose.model("campaign")
+ const Rating = mongoose.model("rating")
+
  app.use(bodyParser.json())
  app.use(express.json());
  app.use(cors());
@@ -83,7 +87,7 @@ mongoose.connect(mongURL,{
      reward.type = req.body.type;
      reward.date = req.body.date;
      reward.points = req.body.points;
-
+     reward.code = req.body.code;
      await reward.save();
      console.log("reward saved:",reward);
      res.send(reward);
@@ -93,21 +97,9 @@ mongoose.connect(mongURL,{
    }
  });
   
- // Set up Multer storage engine
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-      cb(null, 'public/uploads/');
-  },
-  filename: function(req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
-// Initialize Multer upload
-const upload = multer({ storage: storage });
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware function to retrieve store data from database
+
+//  retrieve store data from database
 async function getStoreData(req, res, next) {
   try {
     const store = await Store.findOne().sort({ createdAt: -1 });
@@ -159,11 +151,7 @@ app.get('/loyality', function(req,res){
 })
   //routering of queseval view 
 
-app.get('/queseval', function(req,res){
-  const store = res.locals.store ;
 
-  res.render('queseval',{store: store});
-})
   //routering of advertisement settings 
 app.get('/advertisement', function(req,res){
   const store = res.locals.store ;
@@ -216,6 +204,13 @@ app.get('/notifUser', function(req,res){
   res.render('notifUser',{store: store});
 })
  
+ 
+  //routering of notif-admin settings 
+  app.get('/notifAdmin', (req, res) => {
+    res.render('notifAdmin');
+    
+    });
+
   //routering of notif-admin settings 
   app.get('/notifAdmin', (req, res) => {
     res.render('notifAdmin');
@@ -226,7 +221,8 @@ app.get('/stat', function(req,res){
   res.render('stat',{store: store});
 })
 
-// Upload image api
+// Upload store data logo, name and color
+const upload = multer();
 
 app.post('/upload', upload.single('logo'), function(req, res) {
   const store = new Store({
@@ -266,10 +262,9 @@ const ad = multer();
 app.post('/ad', ad.single('image'), function(req, res) {
   const { type, link } = req.body;
   const imageData = req.file.buffer;
-
   // Convert the image data to a base64-encoded string
   const base64Image = imageData.toString('base64');
-
+   
   // Save the data to the database
   const newAd = new Ad({
     type,
@@ -287,12 +282,6 @@ app.post('/ad', ad.single('image'), function(req, res) {
       res.sendStatus(500);
     });
 });
-
-
-
-
-
-
 
 
 // Add campaigns
@@ -341,13 +330,12 @@ app.post('/newCamp', function(req, res, next) {
 
 });
 });
-
+/*
 // show campaigns 
 app.use(function(req, res, next) {
   Campaign.find({})
     .then(campaigns => {
       res.locals.campaigns = campaigns;
-      console.log(campaigns)
       next();
     })
     .catch(err => {
@@ -355,6 +343,66 @@ app.use(function(req, res, next) {
       return res.status(500).send('Internal Server Error');
     });
 });
+*/
+// show evaluations
+
+app.use(function(req, res, next) {
+  Rating.find({})
+    .then(rows => {
+      console.log('Retrieved ratings successfully:', rows);
+      res.locals.rows = rows;
+      next();
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    });
+});
+
+  //routering of queseval view 
+
+  app.get('/queseval', function(req,res){
+    const store = res.locals.store ;
+    const rows = res.locals.rows ;
+    res.render('queseval',{store, rows});
+  })
+
+  // Send a response to the user
+  app.post('/reply', (req, res) => {
+    const { id, reply } = req.body;
+    Rating.findByIdAndUpdate(id, { reply }, { new: true })
+      .then((rating) => {
+        console.log(rating);
+        res.send('Rating updated successfully');
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error updating rating');
+      });
+  });
+  
+
+  
+  
+
+  app.get('/queseval', function(req, res) {
+    const store = res.locals.store;
+    const rows = res.locals.rows;
+    const messages = req.session.messages || {};
+    req.session.messages = {};
+    res.render('queseval', { store, rows, messages });
+  });
+  
+  
+  
+  
+  
+
+  
+  
+
+
+
 
 
 

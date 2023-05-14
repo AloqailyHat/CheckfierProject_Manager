@@ -418,7 +418,7 @@
         background-color: #FFFFFF;
         width:100px;
         height:32px;
-        margin: 40px 0px 15px 500px;
+        margin: 40px 0px 15px 450px;
         color: #1E1717;
         text-align: center;
         border-radius:10px;
@@ -461,31 +461,31 @@
       </div>
       <ul class="sidebar-list">
           <li class="sidebar-list-item">
-              <a href="/" target="_blank">
+              <a href="/" target="_self">
                   <span class="material-icons-outlined">dashboard</span> Dashboard
               </a>
           </li>
           <li class="sidebar-list-item">
-              <a href="/Loyality" target="_blank">
+              <a href="/Loyality" target="_self">
                   <span class="material-icons-outlined">
                       card_membership</span> Loyality
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
+              <a href="/campaigns" target="_self">
                   <span class="material-icons-outlined">campaign</span> Campaigns
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
+              <a href="/queseval" target="_self">
                   <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
               </a>
           </li>
 
           <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
+              <a href="/storeset" target="_self">
                   <span class="material-icons-outlined">settings</span>  Settings
               </a>
           </li>
@@ -498,9 +498,9 @@
                 <p class="font-weight-bold">Advertisement Settings</p>
               </div>
               <div class="info_form">
-              <form action="/add" method="POST" enctype="multipart/form-data">
+              <form action="/ad" method="POST" enctype="multipart/form-data">
          
-                <label for="logo">Advertisement image: </label><br>
+                <label for="image">Advertisement image: </label><br>
                 <input type="file" id="image_input" name="image" accept="image/png, image/jpg"><br>
                 <label for="name" >Advertisement type</label><br>
                 <input type="text" name="type" id="store_name"><br>
