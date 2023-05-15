@@ -13,15 +13,15 @@
         body{
             background: linear-gradient(
                 to right,
-                #8E6FB2 0%,
-                #8E6FB2 35%,
+                <%= store.color %> 0%,
+                <%= store.color %> 35%,
                 #ECE4F4 35%,
                 #ECE4F4 100%
             );
         }
        
         .signn{
-            color: #ECE4F4;
+            color: #ebebeb;
             margin: -35px 0px 22px 170px;
             width:20px;
             height:32px;
@@ -92,13 +92,17 @@
         }
         
         .qoute{
-           color: #CBACEF;
+           color: <%= store.color %>;
            margin-top: -120px;
            margin-left: 850px;
            font-size: Small;
         }
         #link{
             color: #ffffff;
+        }
+        #logo{
+            margin-top: 23px;
+            margin-left: 140px;
         }
        
        
@@ -110,7 +114,7 @@
     
 
     <div class="register">
-        <form>
+        <form action="/signup" method="POST">
         <label>Business name</label>
         <input type="text" placeholder=" enter the name" name="business_name">
         
@@ -122,10 +126,10 @@
            <input type="number" placeholder=" +966" name="phone_number">  
         
         <label>Password</label>
-        <input type="password" placeholder=" enter the password" name="pass">  
+        <input type="password" placeholder=" enter the password" name="password">  
           
         <div class="register_button"> <span>
-            <a id="login-page" href="dashboard.ejs"> Sign Up</a>
+            <button type="submit"> Sign Up</button>
             <svg class="signn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 
@@ -137,7 +141,7 @@
             <label>Already have an account?</label>
            
             <div class="login_button">
-            <span><a id="link" href="./login.ejs">Log In</a></span>  
+            <span><a id="link" href="/login">Log In</a></span>  
             <svg class="sign" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 
@@ -147,7 +151,7 @@
          </div> 
          
          <div class="imgqo"> 
-                <img src="../assets\checkinlogo.png" alt="checkin logo" width="700" height="700">
+                <img src="<%= store.logo %>" id="logo" alt="checkin logo" width="500" height="500">
         </div>
 
         

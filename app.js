@@ -1,12 +1,13 @@
 const express = require('express');
 const app =  express();
+const session = require('express-session');
 const bodyParser = require('body-parser');
 var cors = require("cors");
 const mongoose = require('mongoose');
 const port = process.env.PORT || 8080
 const multer = require('multer');
 const fs = require('fs');
-const path =require('path')
+const bcrypt = require('bcrypt');
 app.set('view engine', 'ejs')
 
 
@@ -23,6 +24,10 @@ mongoose.connect(mongURL,{
  require('./models/Adds')
  require('./models/Campaigns')
  require('./models/Rating')
+ require('./models/Question')
+ require('./models/Redeem')
+ require('./models/Admin')
+
 
  const User = mongoose.model("user")
  const Reward = mongoose.model("reward")
@@ -30,12 +35,25 @@ mongoose.connect(mongURL,{
  const Ad = mongoose.model("ad")
  const Campaign = mongoose.model("campaign")
  const Rating = mongoose.model("rating")
-
+ const Question = mongoose.model("question")
+ const Redeem = mongoose.model("redeem")
+ const Admin = mongoose.model("admin")
+ 
+ 
  app.use(bodyParser.json())
  app.use(express.json());
  app.use(cors());
  app.use(express.urlencoded({ extended: true }));
  app.use(express.static('assets'));
+
+ // Configure express-session middleware
+app.use(session({
+  secret: 'my-secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
+
+
 
  mongoose.connection.on("connected",()=>{
     console.log("Connected Successfully!")
@@ -137,12 +155,22 @@ app.get('/storeset', function(req,res){
   //routering of main view 
 app.get('/', function(req,res){
   const store = res.locals.store ;
-  res.render('dashboard',{store: store});
+  res.render('signup',{store: store});
 })
   //routering of dashboard 
 app.get('/dashboard', function(req,res){
   const store = res.locals.store ;
   res.render('dashboard',{store: store});
+})
+  //routering of signup 
+  app.get('/signup', function(req,res){
+    const store = res.locals.store ;
+    res.render('signup',{store: store});
+  })
+    //routering of login
+app.get('/login', function(req,res){
+  const store = res.locals.store ;
+  res.render('login',{store: store});
 })
   //routering of loyality view
 app.get('/loyality', function(req,res){
@@ -204,18 +232,6 @@ app.get('/notifUser', function(req,res){
   res.render('notifUser',{store: store});
 })
  
- 
-  //routering of notif-admin settings 
-  app.get('/notifAdmin', (req, res) => {
-    res.render('notifAdmin');
-    
-    });
-
-  //routering of notif-admin settings 
-  app.get('/notifAdmin', (req, res) => {
-    res.render('notifAdmin');
-    
-    });
 app.get('/stat', function(req,res){
   const store = res.locals.store ;
   res.render('stat',{store: store});
@@ -394,6 +410,167 @@ app.use(function(req, res, next) {
   });
   
   
+  app.get('/notifications', (req, res) => {
+    const notification = [];
+    // Retrieve the last unanswered question
+Question.findOne({
+  where: { answered: false },
+  order: [['createdAt', 'DESC']],
+  attributes: ['question']
+}).then(question => {
+  if (question) {
+    // Create a new notification for the last unanswered question
+    Notification.create({
+      type: 'question',
+      message: question.question,
+      read: false
+    }).then(notification => {
+      console.log('New notification created:', notification);
+    }).catch(error => {
+      console.error('Error creating notification:', error);
+    });
+  }
+});
+
+// Retrieve the last redeem record
+Redeem.findOne({
+  order: [['createdAt', 'DESC']],
+  attributes: ['redeem']
+}).then(redeem => {
+  if (redeem) {
+    // Create a new notification for the last redeem record
+    Notification.create({
+      type: 'redeem',
+      message: redeem.redeem,
+      read: false
+    }).then(notification => {
+      console.log('New notification created:', notification);
+    }).catch(error => {
+      console.error('Error creating notification:', error);
+    });
+  }
+});
+
+// Retrieve the last rating with a comment
+Rating.findOne({
+  where: { comment: { [Op.not]: null } },
+  order: [['createdAt', 'DESC']],
+  attributes: ['comment']
+}).then(rating => {
+  if (rating) {
+    // Create a new notification for the last rating with a comment
+    Notification.create({
+      type: 'rating',
+      message: rating.comment,
+      read: false
+    }).then(notification => {
+      console.log('New notification created:', notification);
+    }).catch(error => {
+      console.error('Error creating notification:', error);
+    });
+  }
+});
+
+// Retrieve the last user with more than 100 points
+User.findOne({
+  where: { points: { [Op.gt]: 100 } },
+  order: [['createdAt', 'DESC']],
+  attributes: ['id', 'points']
+}).then(user => {
+  if (user) {
+    // Create a new notification for the last user with more than 100 points
+    Notification.create({
+      type: 'points',
+      message: `User ${user.id} has more than 100 points`,
+      read: false
+    }).then(notification => {
+      console.log('New notification created:', notification);
+    }).catch(error => {
+      console.error('Error creating notification:', error);
+    });
+  }
+});
+  })
+
+
+   //routering of show-notif view
+ app.get('/showNotif', (req, res) => {
+  const store = res.locals.store ;
+  const notifications = res.locals.notifications;
+  res.render('showNotif',{store: store, notifications});
+  
+  });
+  // signup
+  app.post('/signup', async (req, res) => {
+    try {
+      // Extract user input from the request body
+      const { business_name, email, phone_number, password } = req.body;
+  
+      // Hash the user's password using a library like bcrypt
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Create a new user in the database
+      const admin = new Admin({
+        business_name,
+        email,
+        phone_number,
+        password: hashedPassword
+      });
+  
+      await admin.save();
+  
+      // Set the user ID in the session to maintain authentication state
+      req.session.adminId = admin._id;
+  
+      // Send a success response to the client
+      res.send("<script>alert('User created successfully ✔'); window.location.href='/dashboard';</script>");
+
+    } catch (error) {
+      res.send("<script>alert('Can not creating user'); window.location.href='/';</script>");
+      ;
+  
+      // Send an error response to the client
+      res.status(500).json({
+        success: false,
+        message: 'Error creating user'
+      });
+    }
+  });
+  
+ 
+  // login
+  app.post('/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      const admin = await Admin.findOne({ email });
+      if (!admin) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid login credentials'
+        });
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, admin.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid login credentials'
+        });
+      }
+  
+      req.session.adminId = admin._id;
+      res.redirect('/dashboard');
+    } catch (error) {
+      console.error('Error logging in:', error);
+      res.status(500).send('Error logging in');
+    }
+  });
+  
+  
+  
+  
+
   
   
   

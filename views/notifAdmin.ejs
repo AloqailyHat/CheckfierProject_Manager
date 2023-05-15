@@ -365,6 +365,7 @@
     .main-title > p {
       font-size: 20px;
     }
+
     
    </style>
   </head>
@@ -380,7 +381,7 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -431,84 +432,108 @@
           </li>
       </ul>
   </aside>
-   <!-- Main -->
-   <main class="main-container">
-   
-    <div class="main-title">
-        <p class="font-weight-bold"> Admin Notification System </p>
-      </div> 
-      <br>
-      <br>
-      <div class="notif-set">
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table class="table text-nowrap">
-              <thead> 
-                <tr>
-                  <th scope="col">Tag of notification</th>
-                  <th scope="col">App notification</th>
-                  <th scope="col">Email notification</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> App evaluation</td>
-               <td>
-              <input type="checkbox" data-action="#" data-method="post" data-param="app:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                <td>
-                   <input type="checkbox" data-action="#" data-method="post" data-param="email:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                   </tr>
-                      
-                   <tr>
-                    <td> Customer questions </td>
-                    <td>
-                    <input type="checkbox" data-action="#" data-method="post" data-param="app:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                    <td>
-                     <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                    </tr>
-
-                    <tr>
-                      <td> Customer redeems </td>
-                      <td>
-                      <input type="checkbox" data-action="#" data-method="post" data-param="app:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                      <td>
-                       <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                      </tr>
-
-                      <tr>
-                        <td> Customer points </td>
-                        <td>
-                        <input type="checkbox" data-action="#" data-method="post" data-param="app:customer-points" data-shortname="customer-points" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                        <td>
-                         <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-points" data-shortname="customer-points" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked> </td>
-                        </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+ <!-- Main -->
+<main class="main-container">
+  <div class="main-title">
+    <p class="font-weight-bold"> Admin Notification System </p>
+  </div> 
+  <br>
+  <br>
+  <div class="notif-set">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table text-nowrap">
+          <thead> 
+            <tr>
+              <th scope="col">Tag of notification</th>
+              <th scope="col">App notification</th>
+              <th scope="col">Email notification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> App evaluation</td>
+              <td>
+                <input id="rating-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+              <td>
+                <input type="checkbox" data-action="#" data-method="post" data-param="email:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+            </tr>
+            <tr>
+              <td> Customer questions </td>
+              <td>
+                <input id="question-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+              <td>
+                <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+            </tr>
+            <tr>
+              <td> Customer redeems </td>
+              <td>
+                <input id="redeem-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+              <td>
+                <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+            </tr>
+            <tr>
+              <td> Points and rewards </td>
+              <td>
+                <input id="points-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:points-rewards" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+              <td>
+                <input type="checkbox" data-action="#" data-method="post" data-param="email:points-rewards" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
       </div>
-      </div>
-      
-<br>
-</main>       
-     
-   <!--Scripts-->
-  <script>
- 
-  </script>
-</body>
-</html>
+    </div>
+  </div>
+</main>
+<!-- End Main -->
 
 
 
+<!-- Scripts -->
+<script>
+  // Define the checkboxes
+  const questionCheckbox = document.getElementById('question-checkbox');
+  const ratingCheckbox = document.getElementById('rating-checkbox');
+  const redeemCheckbox = document.getElementById('redeem-checkbox');
+  const pointsCheckbox = document.getElementById('points-checkbox');
+  const showNotifications = document.getElementById('notification-icon');
+
+  // Add change event listeners to the checkboxes to update the notifications array
+  questionCheckbox.addEventListener('change', updateNotificationsArray);
+  ratingCheckbox.addEventListener('change', updateNotificationsArray);
+  redeemCheckbox.addEventListener('change', updateNotificationsArray);
+  pointsCheckbox.addEventListener('change', updateNotificationsArray);
 
 
 
+  // Define the notifications array
+  let notifications = [];
 
-
-
-
-
-
-
+  // Function to update the notifications array based on the checkboxes
+  function updateNotificationsArray() {
+    notifications = [];
+    if (questionCheckbox.checked) {
+      notifications.push('New customer question received');
+    }
+    if (ratingCheckbox.checked) {
+      notifications.push('New store rating received');
+    }
+    if (redeemCheckbox.checked) {
+      notifications.push('New customer redeem request received');
+    }
+    if (pointsCheckbox.checked) {
+      notifications.push('Customer earned new reward points');
+    }
+  }
+ </script>
+<!-- End Scripts -->
 
