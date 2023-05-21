@@ -405,7 +405,24 @@ label {
   font-size: 17px;
   font-weight: 600;
 }
-
+.notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+}
 
 
    </style>
@@ -422,7 +439,9 @@ label {
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -482,7 +501,7 @@ label {
       <br>
       <br>
       <div class="user-set">
-        <form action="/add" method="POST" enctype="multipart/form-data">
+        <form action="/send-sms" method="POST" enctype="multipart/form-data">
          
           <label for="sms-notif" >SMS notification</label><br>
           <input type="text" name="type" id="sms_content"><br>
@@ -498,7 +517,39 @@ label {
      
    <!--Scripts-->
   <script>
- 
+      const ws = new WebSocket('ws://localhost:8000');
+
+ws.addEventListener('open', (event) => {
+  console.log('WebSocket connection opened');
+});
+
+ws.addEventListener('message', (event) => {
+  try {
+    const notifications = JSON.parse(event.data);
+    console.log('Received notifications:', notifications);
+
+    const notificationsCount = document.querySelector('.notifications-count');
+
+    // Update the notifications count
+    notificationsCount.textContent = notifications.length;
+    notificationsCount.style.display = 'flex';
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
   </script>
 </body>
 </html>

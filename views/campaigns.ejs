@@ -346,6 +346,24 @@ input {
     width: 100%;
     color: #FFFFFF;
 }
+.notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+}
 
    </style>
   </head>
@@ -361,7 +379,9 @@ input {
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href='/showNotif'>notifications</span></a>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -420,96 +440,47 @@ input {
           <div class="add-camp" onclick="show_hide()">
             <p> <a href="#" class="addcam"> Add campaign </a> </p>
           </div>
-          <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">Action</button>
-            </div>
+         
+           
           </div>  
         </div>
         
          <!-- Form -->
         <!-- Form -->
         <form class="form-popup" id="table-form" action="/newCamp" method="POST" enctype="multipart/form-data">
-          <label for="image1">Campaign image 1: </label><br>
-          <input type="file" id="image1" name="image1" accept="image/png, image/jpg"><br>
-          <label for="image2">Campaign image 2: </label><br>
-          <input type="file" id="image2" name="image2" accept="image/png, image/jpg"><br>
+          <label for="image1">Campaign image : </label><br>
+          <input type="file" id="image1" name="image" accept="image/png, image/jpg"><br>
           <label for="type">Campaign type:</label><br>
           <input type="text" name="type" id="type"><br>
           <label for="name">Campaign name:</label><br>
           <input id="name1" type="text" name="name"><br>
+          <label for="date">Create date:</label><br>
+          <input id="name1" type="date" name="date"><br>
           <button id="submit">Save</button>
         </form>
 
             
       <div class="tbl row">
       <table class="table table-striped mt-5 ">
+        <table>
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Campaign type</th>
-              <th scope="col">Create date</th>
-              <th scope="col">Campaign reach</th>
-              <th><span class="material-icons-outlined">settings</span> </th> 
+              <th>Campaign type</th>
+              <th>campaign name</th>
+              <th>Create date</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row"> <br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"><br></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+            <% campaigns.forEach(function(campaign) { %>
+              <tr>
+                <td><%= campaign.type %></td>
+                <td><%= campaign.name %></td>
+                <td><%= campaign.date.toDateString() %></td>
+              </tr>
+            <% }) %>
           </tbody>
         </table>
-      </div>
-      </div>
+        
       </div>
       <!-- End Main -->
     </div>
@@ -527,5 +498,18 @@ input {
           x.style.display = "none";
         }
       }
+
+      // Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
   </script>
 </html>

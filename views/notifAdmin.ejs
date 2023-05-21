@@ -365,7 +365,24 @@
     .main-title > p {
       font-size: 20px;
     }
-
+    .notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+}
     
    </style>
   </head>
@@ -382,6 +399,8 @@
           </div>
           <div class="header-right">
             <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -500,40 +519,36 @@
 
 <!-- Scripts -->
 <script>
-  // Define the checkboxes
-  const questionCheckbox = document.getElementById('question-checkbox');
-  const ratingCheckbox = document.getElementById('rating-checkbox');
-  const redeemCheckbox = document.getElementById('redeem-checkbox');
-  const pointsCheckbox = document.getElementById('points-checkbox');
-  const showNotifications = document.getElementById('notification-icon');
 
-  // Add change event listeners to the checkboxes to update the notifications array
-  questionCheckbox.addEventListener('change', updateNotificationsArray);
-  ratingCheckbox.addEventListener('change', updateNotificationsArray);
-  redeemCheckbox.addEventListener('change', updateNotificationsArray);
-  pointsCheckbox.addEventListener('change', updateNotificationsArray);
+// Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
+
+// Get the checkbox values
+const pointsCheckbox = document.getElementById('points-checkbox');
+const redeemCheckbox = document.getElementById('redeem-checkbox');
+const ratingCheckbox = document.getElementById('rating-checkbox');
+const questionCheckbox = document.getElementById('question-checkbox');
+const includePoints = pointsCheckbox.checked;
+const includeRedeem = redeemCheckbox.checked;
+const includeRating = ratingCheckbox.checked;
+const includeQuestion = questionCheckbox.checked;
+
+// Construct the URL with the checkbox values as parameters
+const url = `http://localhost:8080/showNotif?includePoints=${includePoints}&includeRedeem=${includeRedeem}&includeRating=${includeRating}&includeQuestion=${includeQuestion}`;
+// Set the href attribute of the link or button to the URL with the checkbox values as parameters
+document.getElementById('notif-link').href = url;
 
 
-
-  // Define the notifications array
-  let notifications = [];
-
-  // Function to update the notifications array based on the checkboxes
-  function updateNotificationsArray() {
-    notifications = [];
-    if (questionCheckbox.checked) {
-      notifications.push('New customer question received');
-    }
-    if (ratingCheckbox.checked) {
-      notifications.push('New store rating received');
-    }
-    if (redeemCheckbox.checked) {
-      notifications.push('New customer redeem request received');
-    }
-    if (pointsCheckbox.checked) {
-      notifications.push('Customer earned new reward points');
-    }
-  }
  </script>
 <!-- End Scripts -->
 

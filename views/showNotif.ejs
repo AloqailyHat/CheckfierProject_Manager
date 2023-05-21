@@ -6,7 +6,6 @@
     <title>Manager Dashboard</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-7t8u4tC5VP6d6lR2h1CHLw2tJvBW0Jz7Iv6fJhJGc8s0Uiw5O1vH5sBJdE7I1Jp8jzGj1c1V2+q7k9SxY5H2Kw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Custom CSS -->
    <style>
@@ -22,6 +21,7 @@
   .material-icons-outlined {
     vertical-align: middle;
     line-height: 1px;
+    position: relative;
   }
 
   .text-primery {
@@ -315,8 +315,33 @@
   .send-btn {
     border-radius: 10px;
   }
+  .center {
+  margin-left: 40%;
+    top: 25%;
+    position: absolute;
+    font-size: large;
+}
+.notifications-count {
+  position: absolute;
+  display: flex;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
 
-  
+.notification-item.unread {
+  color: black;
+  font-style: bold;
+}
+
+
    </style>
   </head>
   <body>
@@ -331,8 +356,9 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
-            <span class="material-icons-outlined">account_circle</span>
+              <span class="material-icons-outlined"id='notifications-icon' >notifications</span>
+              <p class="notifications-count" id="noti_number"></p>
+             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
       <!-- End Header -->
@@ -388,48 +414,141 @@
     <div class="main-title">
       <p class="font-weight-bold">Notifications</p>
     </div>
-    <table>
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-        <tbody>
-            <% if (notifications && notifications.length > 0) { %>
-                <% notifications.forEach(function(notification) { %>
-                  <tr>
-                    <td><%= notification.type %></td>
-                    <td><%= notification.message %></td>
-                  </tr>
-                <% }); %>
-              <% } else { %>
-                <tr>
-                  <td colspan="2">No notifications to display</td>
-                </tr>
-              <% } %>
-        
-        </tbody>
-    
-      </table>
-      </main>
+    <div id="notifications-list" class="notifications-list">
+      <!-- notifications will be added here -->
+    </div>
+  
+      
+    </div>
+  
+   <script>
+   function updateNotificationsCount() {
+  // Fetch the notifications from the server
+  fetch('http://localhost:8080/notifications')
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const notifications = data.notifications;
+        const unreadNotifications = notifications.filter(notification => !notification.read);
+        const unreadCount = unreadNotifications.length;
+
+        // Display the count of unread notifications to the user
+        const notificationsCount = document.getElementById('noti_number');
+        notificationsCount.textContent = unreadCount;
+        notificationsCount.style.display = unreadCount > 0 ? 'block' : 'none';
+
+        // Store the count in the browser's local storage
+        localStorage.setItem('unreadNotificationsCount', unreadCount);
+      } else {
+        console.error('Failed to fetch notifications:', data.error);
+      }
+    })
+    .catch(error => console.error('Error fetching notifications:', error));
+}
+
+// Call the updateNotificationsCount function once on page load
+updateNotificationsCount();
+
+// Update the count of unread notifications every 30 seconds
+setInterval(updateNotificationsCount, 30000);
+
+// Retrieve the count from the browser's local storage on all pages
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById('noti_number');
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
+
+// Next, modify the client-side code to use the count of unread notifications
+fetch('http://localhost:8080/notifications')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const notifications = data.notifications;
+      const unreadCount = parseInt(unreadNotificationsCount); // Parse the count from local storage
+
+      // Display the count of unread notifications to the user
+      const notificationsCount = document.getElementById('noti_number');
+      notificationsCount.textContent = unreadCount;
+      notificationsCount.style.display = unreadCount > 0 ? 'block' : 'none';
+
+      // Display the notifications in a list
+      const notificationsList = document.getElementById('notifications-list');
+      notifications.forEach(notification => {
+        const listItem = document.createElement('div');
+        listItem.className = 'notification-item';
+        let content;
+        if (notification.type === 'question') {
+          content = `Received new question: ${notification.content.question}`;
+          listItem.onclick = function() {
+            window.location.href = '/queseval';
+          }
+
+        } else if (notification.type === 'redeem') {
+          content = `User ${notification.content.userPhone} Redeemed: ${notification.content.points} points`;
+          listItem.onclick = function() {
+            window.location.href = '/queseval';
+          }
+        } else if (notification.type === 'rating') {
+          content = `User ${notification.content.phone} Rating for: ${notification.content.rating} rating, and review: ${notification.content.comment}`;  
+        } else {
+          content = notification.message;
+        }
+        listItem.innerHTML = `
+          <div class="notification-content">
+            <p class="notification-text">${content}</p>
+          </div>
+        `;
+
+        // Add a CSS class to the list item element for each unread notification
+        if (!notification.read) {
+          listItem.classList.add('unread');
+
+          listItem.addEventListener('click', () => {
+            const notificationId = notification._id;
+
+            // Send an AJAX request to update the notification's read field
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', `/notifications/${notificationId}/read`);
+            xhr.send();
+
+            // Update the notification in the local array and on the page
+            notification.read = true;
+            listItem.classList.remove('unread');
+
+            // Update the count of unread notifications
+            const notificationsCount = document.getElementById('noti_number');
+            notificationsCount.textContent = parseInt(notificationsCount.textContent) - 1;
+            notificationsCount.style.display = notificationsCount.textContent > 0 ? 'block' : 'none';
+            localStorage.setItem('unreadNotificationsCount', notificationsCount.textContent);
+          });
+        }
+
+        notificationsList.appendChild(listItem);
+      });
+
+    } else {
+      console.error('Failed to fetch notifications:', data.error);
+    }
+  })
+  .catch(error => console.error('Error fetching notifications:', error));
+
+
+   </script>
 
 
 
-      <script>
-        // Get the notifications data from the URL query parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const notificationsData = urlParams.get('notifications');
     
-        // Parse the notifications data as JSON
-        const notifications = JSON.parse(notificationsData);
-    
-        // Display the notifications in the table
-        const notificationsList = document.getElementById('notifications-list');
-        notifications.forEach(notification => {
-          const tr = document.createElement('tr');
-          const td = document.createElement('td');
-          td.innerText = notification;
-          tr.appendChild(td);
-          notificationsList.appendChild(tr);
-        });
-      </script>
-    
+ 
+
+
+
+
+   
+</div>
+</main>
+  
+  
+ </body>
+</html>

@@ -356,6 +356,24 @@
   width: 983px;
   margin: 40px 0px 10px -1px;
 }
+.notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+}
 
    </style>
   </head>
@@ -371,7 +389,9 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">otifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -432,16 +452,17 @@
           <div class="lang-set">
             <div class="user-lang">
              <div  class="text-primary"> <p style="color: #282626">Select the language for users` system:</p> </div> 
-                <select class="p-1 mt-2">
-                  <option value="en" data-i18n="english" selected>English</option>
-                  <option value="ar" data-i18n="arabic">Arabic</option>
-                </select>
+             <select class="p-1 mt-2" name="lang">
+              <option value="en" data-i18n="english" selected>English</option>
+              <option value="ar" data-i18n="arabic">Arabic</option>
+            </select>
+            
         </div>
         <br>
         <div class="lang-line"></div>
           <div class="manager-lang">
          <div class="text-primary"> <p style="color:#282626">Select the language for your system: </p> </div>
-            <select class="p-1 mt-2">
+            <select class="p-1 mt-2" id="language-selector">
               <option value="en" data-i18n="english" selected>English</option>
               <option value="ar" data-i18n="arabic">Arabic</option> 
             </select> 
@@ -453,6 +474,32 @@
 
 
     <!-- Custom JS -->
+    <script>
+      // Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
+
+
+// Select language
+
+
+const select = document.querySelector('select');
+select.addEventListener('change', function() {
+  const lang = select.value;
+  window.location.href = `/${lang}/signup`; // Redirect to appropriate URL with selected language value
+});
+
+
+    </script>
    
   </body>
 </html>

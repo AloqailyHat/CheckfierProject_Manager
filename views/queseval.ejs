@@ -315,7 +315,24 @@
   .send-btn {
     border-radius: 10px;
   }
-
+  .notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+} 
   
    </style>
   </head>
@@ -331,7 +348,9 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -388,18 +407,13 @@
         <div class="main-title">
           <p class="font-weight-bold">Questions and Evaluations</p>
         </div>
-        <div class="dropdown">
-          <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Filter
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button">Action</button>
-          </div>
+       
         </div> 
         </div>
-        
       <div class="tbl row">
-        <table class="table table-striped mt-5">
+        <h5>Evaluations</h5>
+
+        <table class="table table-striped mt-3 mb-5">
           <thead>
             <tr>
               <th scope="col">User</th>
@@ -410,28 +424,28 @@
             </tr>
           </thead>
           <tbody>
-            <% console.log(rows); %>
-            <% if (rows && rows.length) { %>
-              <% for (let i = 0; i < rows.length; i++) { %>
+            <% if (rows && rows.length > 0) { %>
+              <% rows.forEach(function(rating) { %>
+
                 <tr>
-                  <td><%= rows[i].phone %></td>
-                  <td><%= rows[i].comment %></td>
+                  <td><%= rating.phone %></td>
+                  <td><%= rating.comment %></td>
                   <td>
-                    <% for (let j = 0; j < rows[i].rating; j++) { %>
+                    <% for (let j = 0; j < rating.rating; j++) { %>
                       ⭐ </i>
                     <% } %>
                   </td>
         
-                  <td><%= rows[i].date %></td>
+                  <td><%= rating.date %></td>
                   <td>
-                    <form method="post" action="/reply" enctype="multipart/form-data">
-                      <input type="hidden" name="id" value="<%= rows[i]._id %>">
+                    <form method="post" action="/reply">
+                      <input type="hidden" name="id" value="<%= rating._id %>">
                       <input type="text" name="reply" placeholder="Reply ....">
                       <button type="submit">Send</button>
                     </form>
                   </td>
                 </tr>
-              <% } %>
+              <% }) %>
             <% } else { %>
               <tr>
                 <td colspan="5">No ratings found</td>
@@ -439,7 +453,46 @@
             <% } %>
           </tbody>
         </table>
+        <br/>
+        <h5>Questions</h5>
+        <br/>
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>User Phone</th>
+              <th>Add answer</th>
+
+              <!-- Add more column headers here as needed -->
+            </tr>
+          </thead>
+          <tbody>
+            <% if (questions && questions.length > 0) { %>
+
+            <% questions.forEach(function(question) { %>
+              <tr>
+                <td><%= question.question %></td>
+                <td><%= question.userPhone %></td>
+                <td>
+                <form method="POST" action="/answer">
+                  <input type="hidden" name="questionId" value="<%= question._id %>">
+                  <input type="text" name="answer">
+                  <button type="submit">Send</button>
+                </form>
+              </td>
+  
+
+              </tr>
+              <% }) %>
+          </tbody>
+          <% } else { %>
+            <p>No questions found.</p>
+          <% } %>
         
+          
+        </table>
+        
+      
       </div>
       </div>
       </div>
@@ -449,6 +502,23 @@
 
 
     <!-- Custom JS -->
-   
+   <script>
+    // Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
+
+
+
+
+   </script>
   </body>
 </html>

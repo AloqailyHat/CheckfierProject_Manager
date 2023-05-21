@@ -426,6 +426,24 @@
         border-color: #C1AFD2;
         line-height: 30px;
     }
+    .notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
+}
    </style>
   </head>
   <body>
@@ -440,7 +458,9 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -514,24 +534,18 @@
   <br>
    <!--Scripts-->
   <script>
-   /* const image_input = document.getElementById("image_input");
-    var uploaded_image = "";
+  // Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 
-    image_input.addEventListener("change", function(){
-        const reader = new FileReader();
-        reader.addEventListener('load', () =>{
-            uploaded_image = reader.result;
-            document.getElementById("_logo").style.backgroundImage = `url(${uploaded_image})` 
-            document.getElementById("_logo").style.backgroundSize = 'cover'
-        })
-        reader.readAsDataURL(this.files[0]);
-    })
-    function changeColor() {
-      const colName = document.getElementById("color").value;
-      console.log(colName)
-      document.getElementById("sidebar").style.backgroundColor = colName
-      
-    }*/
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
    
   </script>
 

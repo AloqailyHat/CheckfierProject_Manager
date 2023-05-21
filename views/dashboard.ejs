@@ -423,7 +423,25 @@
   border-radius: 10px;
   margin: 380px 0px 15px 10px;
 }
-  
+a {
+  text-decoration: none;
+  color: #666666;
+}
+.notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 
 
    </style>
@@ -440,7 +458,9 @@
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
+
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -498,6 +518,7 @@
             <p class="font-weight-bold">DASHBOARD</p>
           </div>
 
+
           <div class="charts">
             <div class="charts-card">
                 <p class="chart-title"> General Overview</p>
@@ -509,11 +530,16 @@
             </div>
           </div>
             <br>
-          <div class="first-step"> <b> &nbsp; First step </div>
+          <div class="first-step"> <a href="/essential"><b> &nbsp; First step </div></a>
           <br>
-          <div class="second-step">  &nbsp; Second step </div>
+          <div class="second-step"><a href="/language">  &nbsp; Second step </div></a>
       </main>
       <!-- End Main -->
+      <input type="hidden" id="userCount" value="<%= userCount %>">
+      <input type="hidden" id="totalPoints" value="<%= totalPoints %>">
+      <input type="hidden" id="totalUsedPoints" value="<%= totalUsedPoints %>">
+      <input type="hidden" id="expiredPoints" value="<%= expiredPoints %>">
+
 
     </div>
 
@@ -522,7 +548,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
     <!-- Custom JS -->
     <script>
-      var sidebarOpen = false;
+      const userCount = document.getElementById("userCount").value;
+      const totalPoints = document.getElementById("totalPoints").value;
+      const totalUsedPoints = document.getElementById("totalUsedPoints").value;
+      const expiredPoints = document.getElementById("expiredPoints").value;
+
+
+       var sidebarOpen = false;
       var sidebar = document.getElementById("sidebar");
       
       function openSidebar() {
@@ -546,7 +578,7 @@
       // BAR CHART
       var barChartOptions = {
         series: [{
-          data: [10, 8, 6, 4]
+          data: [userCount,totalPoints, expiredPoints, expiredPoints]
         }],
         chart: {
           type: 'bar',
@@ -589,7 +621,7 @@
 
       // AREA CHART
       var areaChartOptions = {
-          series: [42, 47, 52, 58],
+          series: [totalPoints, expiredPoints, totalUsedPoints, expiredPoints],
           chart: {
           width: 480,
           type: 'polarArea'
@@ -629,6 +661,19 @@
       
       var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaChartOptions);
       areaChart.render();
+
+      // Retrieve the count from the browser's local storage
+const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+if (unreadNotificationsCount) {
+  const notificationsCount = document.getElementById("noti_number");
+  notificationsCount.textContent = unreadNotificationsCount;
+  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+  // Display the count on the icon in the other page
+  const iconNotificationsCount = document.getElementById('icon_noti_number');
+  iconNotificationsCount.textContent = unreadNotificationsCount;
+  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+}
   
     </script>
   </body>
