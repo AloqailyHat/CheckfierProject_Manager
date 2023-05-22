@@ -389,56 +389,56 @@ a {
 
       <!-- Sidebar -->
       <aside id="sidebar">
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-        <img src="<%= store.logo %>"height="55" width="55">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo">
           <h2 id="name"><%= store.name %></h2>
-        </span>
-        <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/dashboard">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/loyality">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-            <p class="font-weight-bold">Campaigns</p>
+            <p class="font-weight-bold"><%= __("sideCamp")%></p>
           </div>
           <div class="add-camp" onclick="show_hide()">
-            <p> <a href="#" class="addcam"> Add campaign </a> </p>
+            <p> <a href="#" class="addcam"> <%= __("addCamp")%> </a> </p>
           </div>
          
            
@@ -448,15 +448,15 @@ a {
          <!-- Form -->
         <!-- Form -->
         <form class="form-popup" id="table-form" action="/newCamp" method="POST" enctype="multipart/form-data">
-          <label for="image1">Campaign image : </label><br>
+          <label for="image1"><%= __("campimg")%> </label><br>
           <input type="file" id="image1" name="image" accept="image/png, image/jpg"><br>
-          <label for="type">Campaign type:</label><br>
+          <label for="type"><%= __("campType")%>:</label><br>
           <input type="text" name="type" id="type"><br>
-          <label for="name">Campaign name:</label><br>
+          <label for="name"><%= __("campName")%>:</label><br>
           <input id="name1" type="text" name="name"><br>
-          <label for="date">Create date:</label><br>
+          <label for="date"><%= __("campDate")%>:</label><br>
           <input id="name1" type="date" name="date"><br>
-          <button id="submit">Save</button>
+          <button id="submit"><%= __("save")%></button>
         </form>
 
             
@@ -465,9 +465,9 @@ a {
         <table>
           <thead>
             <tr>
-              <th>Campaign type</th>
-              <th>campaign name</th>
-              <th>Create date</th>
+              <th><%= __("campType")%></th>
+              <th><%= __("campName")%></th>
+              <th><%= __("campDate")%></th>
             </tr>
           </thead>
           <tbody>

@@ -301,79 +301,75 @@ a {
     
           <!-- Sidebar -->
           <aside id="sidebar">
-          <!-- End Sidebar -->
-          <div class="sidebar-title">
-          <div class="sidebar-brand ">
-                <img src="<%= store.logo %>"height="55" width="55">
-                <h2 id="name"><%= store.name %></h2>
-                <div class="h_line"></div>
-    
+            <!-- End Sidebar -->
+            <div class="sidebar-title">
+            <div class="sidebar-brand">
+              <img src="<%= store.logo %>" id="_logo" height="55" width="55">
+              <h2 id="name"><%= store.name %></h2>
+              </span>
+              <div class="h_line"></div>
+      
+                </div>
+                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
               </div>
-              <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-            </div>
-            <ul class="sidebar-list">
-                <li class="sidebar-list-item">
-                    <a href="/dashboard" target="_blank">
-                        <span class="material-icons-outlined">dashboard</span> Dashboard
-                    </a>
-                </li>
-                <li class="sidebar-list-item">
-                    <a href="/loyality" target="_blank">
-                        <span class="material-icons-outlined">
-                            card_membership</span> Loyality
-                    </a>
-                </li>
-    
-                <li class="sidebar-list-item">
-                    <a href="/campaigns" target="_blank">
-                        <span class="material-icons-outlined">campaign</span> Campaigns
-                    </a>
-                </li>
-    
-                <li class="sidebar-list-item">
-                    <a href="/queseval" target="_blank">
-                        <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-                    </a>
-                </li>
-    
-                <li class="sidebar-list-item">
-                    <a href="/storeset" target="_blank">
-                        <span class="material-icons-outlined">settings</span>  Settings
-                    </a>
-                </li>
-            </ul>
-        </aside>
+              <ul class="sidebar-list">
+                  <li class="sidebar-list-item">
+                      <a href="/dashboard" target="_blank">
+                          <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                      </a>
+                  </li>
+                  <li class="sidebar-list-item">
+                      <a href="/loyality" target="_blank">
+                          <span class="material-icons-outlined">
+                              card_membership</span> <%= __("sideLoyality")%>
+                      </a>
+                  </li>
+      
+                  <li class="sidebar-list-item">
+                      <a href="/campaigns" target="_blank">
+                          <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                      </a>
+                  </li>
+      
+                  <li class="sidebar-list-item">
+                      <a href="/queseval" target="_blank">
+                          <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                      </a>
+                  </li>
+      
+                  <li class="sidebar-list-item">
+                      <a href="/storeset" target="_blank">
+                          <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                      </a>
+                  </li>
+              </ul>
+          </aside>
        
 
         <!-- Main -->
         <main class="main-container">
           <div class="main-title">
-              <p class="font-weight-bold">POINTS</p>
+              <p class="font-weight-bold"><%= __("Points")%></p>
             </div>
             <div class="add-btn">
-              <button id="btn-add" onclick="show_hide()">Add point</button>
+              <button id="btn-add" onclick="show_hide()"><%= __("addPoints")%></button>
             </div>
-            <div class="create-date">
-              <p >Date: All time</p>
-            </div>
-            <div class="status">
-              <p >Status: Active/Inactive</p>
-            </div>
+          
 
           </div>
           <!-- Form -->
           <div class="container">
             <form class="form-popup" id="table-form" method="post" action="/">
-            <label for="phone">User number</label><br>
+            <label for="phone"><%= __("userphone")%></label><br>
             <input type="text" name="phone" id="phone">
-            <label for="points">Points</label>
+            <label for="points"><%= __("Points")%></label>
             <input type="number" name="points" id="points">
-            <label for="status">Status</label><br>
+            <label for="status"><%= __("status")%></label><br>
             <select id="status" name="status">
-              <option>Active</option>
-              <option>Inactive</option>
+              <option><%= __("activePoint")%></option>
+              <option><%= __("inactive")%></option>
             </select><br>
-            <label for="date">Create date</label>
+            <label for="date"><%= __("date")%></label>
             <input type="date" name="date" id="date">
             <input type="button" name="button" id="btn" value="Add" onclick="updateUser()">
             </form>
@@ -383,10 +379,10 @@ a {
             <table id="userTable">
               <thead>
                 <tr>
-                  <th>User number</th>
-                  <th>Points </th>
-                  <th>Status</th>
-                  <th>Create date</th>
+                  <th><%= __("userphone")%></th>
+                  <th><%= __("Points")%> </th>
+                  <th><%= __("status")%></th>
+                  <th><%= __("date")%></th>
                 </tr>
               </thead>
               <tbody>

@@ -321,77 +321,71 @@ a {
   
         <!-- Sidebar -->
         <aside id="sidebar">
-        <!-- End Sidebar -->
-        <div class="sidebar-title">
-        <div class="sidebar-brand">
-          <img src="<%= store.logo %>" id="_logo" width="55" height="55">
-          <h2 id="name"><%= store.name %></h2>
-          </span>
-          <div class="h_line"></div>
-  
+          <!-- End Sidebar -->
+          <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <img src="<%= store.logo %>" id="_logo" height="55" width="55">
+            <h2 id="name"><%= store.name %></h2>
+            </span>
+            <div class="h_line"></div>
+    
+              </div>
+              <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
             </div>
-            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-          </div>
-          <ul class="sidebar-list">
-              <li class="sidebar-list-item">
-                  <a href="/dashboard" >
-                      <span class="material-icons-outlined">dashboard</span> Dashboard
-                  </a>
-              </li>
-              <li class="sidebar-list-item">
-                  <a href="/loyality">
-                      <span class="material-icons-outlined">
-                          card_membership</span> Loyality
-                  </a>
-              </li>
-  
-              <li class="sidebar-list-item">
-                  <a href="/campaigns">
-                      <span class="material-icons-outlined">campaign</span> Campaigns
-                  </a>
-              </li>
-  
-              <li class="sidebar-list-item">
-                  <a href="/queseval">
-                      <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-                  </a>
-              </li>
-  
-              <li class="sidebar-list-item">
-                  <a href="/storeset">
-                      <span class="material-icons-outlined">settings</span>  Settings
-                  </a>
-              </li>
-          </ul>
-      </aside>
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item">
+                    <a href="/dashboard" target="_blank">
+                        <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="/loyality" target="_blank">
+                        <span class="material-icons-outlined">
+                            card_membership</span> <%= __("sideLoyality")%>
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="/campaigns" target="_blank">
+                        <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="/queseval" target="_blank">
+                        <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                    </a>
+                </li>
+    
+                <li class="sidebar-list-item">
+                    <a href="/storeset" target="_blank">
+                        <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                    </a>
+                </li>
+            </ul>
+        </aside>
        
 
         <!-- Main -->
         <main class="main-container">
           <div class="main-title">
-              <p class="font-weight-bold">REWARDS</p>
+              <p class="font-weight-bold"><%= __("rewardsTit")%></p>
             </div>
             <div class="add-btn">
-              <button id="btn-add" onclick="show_hide()">Add reward</button>
+              <button id="btn-add" onclick="show_hide()"><%= __("addReward")%></button>
             </div>
-            <div class="create-date">
-              <p >Create date: All time</p>
-            </div>
-            <div class="status">
-              <p >Status: Active/Inactive</p>
-            </div>
-
+          
           </div>
           <!-- Form -->
           <div class="container">
             <form class="form-popup" id="table-form" method="post" action="/">
-            <label for="rname">Name</label><br>
+            <label for="rname"><%= __("rewardName")%></label><br>
             <input type="text" name="name" id="rname">
-            <label for="points">Reward type</label>
+            <label for="points"><%= __("rewardType")%></label>
             <input type="text" name="type" id="rtype">
-            <label for="date">Create date</label>
+            <label for="date"><%= __("date")%></label>
             <input type="date" name="date" id="date">
-            <label for="points">Points cost</label>
+            <label for="points"><%= __("cost")%></label>
             <input type="text" name="points" id="points">
             <input type="button" name="button" id="btn" value="Add" onclick="addReward()">
             </form>
@@ -401,10 +395,10 @@ a {
             <table id="userTable">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Reward type</th>
-                  <th>Create date</th>
-                  <th>Points cost</th>
+                  <th><%= __("rewardName")%></th>
+                  <th><%= __("rewardType")%></th>
+                  <th><%= __("date")%></th>
+                  <th><%= __("cost")%></th>
                 </tr>
               </thead>
               <tbody>

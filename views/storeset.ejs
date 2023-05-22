@@ -77,7 +77,7 @@
   #sidebar {
     grid-area: sidebar;
     height: 100%;
-    background-color: #8E6FB2;
+    background-color: <%= store.color %>;
     color: #E9E5EE;
     overflow-y: auto;
     -webkit-transition: all 0.5;
@@ -430,56 +430,56 @@ a {
       <!-- End Header -->
 
       <!-- Sidebar -->
-      <aside id="sidebar" style="background-color: <%= store.color %>;">
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-        <img src="<%= store.logo %>" id="_logo">
-                  <h2 id="name"><%= store.name %></h2>
-                </span>
-            <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/dashboard" target="_blank">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/loyality" target="_blank">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+      <aside id="sidebar">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo">
+          <h2 id="name"><%= store.name %></h2>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
  
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
           
-          <p class="font-weight-bold">Store Settings</p>
+          <p class="font-weight-bold"><%= __("store")%></p>
         </div>
       <br>
         
@@ -489,7 +489,7 @@ a {
             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
             <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
           </svg>
-           <a id="link" href="/essential"><h5> Essential settings <br> <small> <small> change color, logo, name  </small></small> <br> </h5> </a>   
+           <a id="link" href="/essential"><h5> <%= __("essential")%> <br> <small> <small> change color, logo, name  </small></small> <br> </h5> </a>   
           </div> 
 
         <div class="lang-card"> <br>
@@ -497,7 +497,7 @@ a {
             <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286H4.545zm1.634-.736L5.5 3.956h-.049l-.679 2.022H6.18z"/>
             <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2zm7.138 9.995c.193.301.402.583.63.846-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6.066 6.066 0 0 1-.415-.492 1.988 1.988 0 0 1-.94.31z"/>
           </svg>
-          <a id="link" href="/language"><h5> Language settings</h5> </a>   
+          <a id="link" href="/language"><h5> <%= __("language")%></h5> </a>   
        </div> 
 
        <div class="addv-card"> <br>
@@ -505,20 +505,20 @@ a {
           <path d="m3.7 11 .47-1.542h2.004L6.644 11h1.261L5.901 5.001H4.513L2.5 11h1.2zm1.503-4.852.734 2.426H4.416l.734-2.426h.053zm4.759.128c-1.059 0-1.753.765-1.753 2.043v.695c0 1.279.685 2.043 1.74 2.043.677 0 1.222-.33 1.367-.804h.057V11h1.138V4.685h-1.16v2.36h-.053c-.18-.475-.68-.77-1.336-.77zm.387.923c.58 0 1.002.44 1.002 1.138v.602c0 .76-.396 1.2-.984 1.2-.598 0-.972-.449-.972-1.248v-.453c0-.795.37-1.24.954-1.24z"/>
           <path d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
         </svg>
-        <a id="link" href="/advertisement"><h5> Advertisement settings</h5> </a>   
+        <a id="link" href="/advertisement"><h5> <%= __("advert")%></h5> </a>   
      </div> 
 
      <div class="notif-card"> <br>
       <svg class="not-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
       </svg>
-      <a id="link" href="/notif"><h5> Notification settings</h5> </a>   
+      <a id="link" href="/notif"><h5> <%= __("notif")%></h5> </a>   
    </div> 
 
 
 
 <div class="personal-sett">
-  <a id="link" href="/settings">Personal settings </a> 
+  <a id="link" href="/settings"><%= __("personal")%> </a> 
   </div>
    
          </div>

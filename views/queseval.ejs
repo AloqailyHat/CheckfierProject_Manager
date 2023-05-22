@@ -358,69 +358,69 @@ a {
 
       <!-- Sidebar -->
       <aside id="sidebar">
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-         <img src="<%= store.logo %>"height="55" width="55">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo" height="55" width="55">
           <h2 id="name"><%= store.name %></h2>
-        </span>
-        <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/dashboard" target="_blank">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/Loyality" target="_blank">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
  
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-          <p class="font-weight-bold">Questions and Evaluations</p>
+          <p class="font-weight-bold"><%= __("sideEval")%></p>
         </div>
        
         </div> 
         </div>
       <div class="tbl row">
-        <h5>Evaluations</h5>
+        <h5><%= __("evaluations")%></h5>
 
         <table class="table table-striped mt-3 mb-5">
           <thead>
             <tr>
-              <th scope="col">User</th>
-              <th scope="col">Review</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Date</th>
-              <th scope="col">Reply</th>
+              <th scope="col"><%= __("user")%></th>
+              <th scope="col"><%= __("review")%></th>
+              <th scope="col"><%= __("rating")%></th>
+              <th scope="col"><%= __("date")%></th>
+              <th scope="col"><%= __("replay")%></th>
             </tr>
           </thead>
           <tbody>
@@ -454,14 +454,14 @@ a {
           </tbody>
         </table>
         <br/>
-        <h5>Questions</h5>
+        <h5><%= __("questions")%></h5>
         <br/>
         <table class="table table-striped mt-3">
           <thead>
             <tr>
-              <th>Question</th>
-              <th>User Phone</th>
-              <th>Add answer</th>
+              <th><%= __("question")%></th>
+              <th><%= __("userphone")%></th>
+              <th><%= __("answer")%></th>
 
               <!-- Add more column headers here as needed -->
             </tr>

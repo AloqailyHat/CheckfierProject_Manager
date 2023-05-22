@@ -1,26 +1,39 @@
 const express = require('express');
 const app =  express();
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 const bodyParser = require('body-parser');
 var cors = require("cors");
 const mongoose = require('mongoose');
 const port = process.env.PORT || 8080
 const multer = require('multer');
 const fs = require('fs');
-
 const http = require('http');
-const WebSocket = require('ws');
-
 const server = http.createServer();
-const wss = new WebSocket.Server({ server });
+const path = require("path")
 
+const i18n = require('i18n');
+
+i18n.configure({
+  locales: ['en', 'ar'],
+  directory: __dirname + '/locales',
+  defaultLocale: 'en'
+});
+
+app.use(cookieParser());
+app.use(session({
+  secret: 'my-secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(i18n.init);
 
 
 const bcrypt = require('bcrypt');
 
-
 app.set('view engine', 'ejs')
-
 
 const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority"
 
@@ -65,13 +78,8 @@ mongoose.connect(mongURL,{
  app.use(cors());
  app.use(express.urlencoded({ extended: true }));
  app.use(express.static('assets'));
-
- // Configure express-session middleware
-app.use(session({
-  secret: 'my-secret-key',
-  resave: false,
-  saveUninitialized: false
-}));
+ app.use(i18n.init);
+ 
 
 
 
@@ -82,6 +90,22 @@ app.use(session({
     console.log("error", err)
  })
 
+
+ // Configure express-session middleware
+ app.post('/language', function(req, res) {
+  const language = req.body.language || 'ar';
+  res.cookie('language', language, { maxAge: 900000, httpOnly: true });
+  res.redirect('/dashboard');
+});
+
+app.use(function(req, res, next) {
+  const language = req.cookies.language || 'ar';
+  req.setLocale(language);
+  next();
+});
+
+
+ 
 
 
   //show users api //
@@ -222,12 +246,6 @@ app.get('/', function(req,res){
       res.status(500).send({ message: error.message });
     }
   });
-  
-  
-  
-  
-  
-  
   
   //routering of signup 
   app.get('/signup', function(req,res){

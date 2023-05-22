@@ -407,54 +407,54 @@ a {
       <!-- End Header -->
 
       <!-- Sidebar -->
-      <aside id="sidebar" >
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-        <img src="<%= store.logo %>" id="_logo" height="55" width="55">
-                  <h2 id="name"><%= store.name %></h2>
-                </span>
-            <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/" target="_blank">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/Loyality" target="_self">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns" target="_self">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval" target="_self">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset" target="_self">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+      <aside id="sidebar">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo">
+          <h2 id="name"><%= store.name %></h2>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
  <!-- Main -->
 <main class="main-container">
   <div class="main-title">
-    <p class="font-weight-bold"> Admin Notification System </p>
+    <p class="font-weight-bold"> <%= __("adminSys")%> </p>
   </div> 
   <br>
   <br>
@@ -464,14 +464,14 @@ a {
         <table class="table text-nowrap">
           <thead> 
             <tr>
-              <th scope="col">Tag of notification</th>
-              <th scope="col">App notification</th>
-              <th scope="col">Email notification</th>
+              <th scope="col"><%= __("tag")%></th>
+              <th scope="col"><%= __("appNotif")%></th>
+              <th scope="col"><%= __("emailNotif")%></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td> App evaluation</td>
+              <td> <%= __("evalNotif")%></td>
               <td>
                 <input id="rating-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
@@ -480,7 +480,7 @@ a {
               </td>
             </tr>
             <tr>
-              <td> Customer questions </td>
+              <td> <%= __("quesNotif")%> </td>
               <td>
                 <input id="question-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
@@ -489,7 +489,7 @@ a {
               </td>
             </tr>
             <tr>
-              <td> Customer redeems </td>
+              <td> <%= __("redeemNotif")%> </td>
               <td>
                 <input id="redeem-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
@@ -498,7 +498,7 @@ a {
               </td>
             </tr>
             <tr>
-              <td> Points and rewards </td>
+              <td> <%= __("pointsNotif")%> </td>
               <td>
                 <input id="points-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:points-rewards" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>

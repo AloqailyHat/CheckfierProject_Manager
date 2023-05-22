@@ -467,68 +467,68 @@ a {
       <!-- End Header -->
 
       <!-- Sidebar -->
-      <aside id="sidebar" style="background-color: <%= store.color %>;">
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-        <img src="<%= store.logo %>" id="_logo">
-                  <h2 id="name"><%= store.name %></h2>
-                </span>
-            <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/" target="_blank">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/Loyality" target="_blank">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+      <aside id="sidebar">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo">
+          <h2 id="name"><%= store.name %></h2>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
    <!-- Main -->
    <main class="main-container">
    
             <div class="main-title">
-                <p class="font-weight-bold">Essential Settings</p>
+                <p class="font-weight-bold"><%= __("essential")%></p>
               </div>
               <div class="info_form">
               <form action="/upload" method="POST" enctype="multipart/form-data">
-                <label for="name" >Store name</label><br>
+                <label for="name" ><%= __("storeName")%></label><br>
                 <input type="text" name="storeName" id="store_name" style="border-color: <%= store.color %>;"><br>
-                <label for="logo">Store logo</label><br>
+                <label for="logo"><%= __("logo")%></label><br>
                
 
                 <input type="file" id="image_input" name="logo" accept="image/png, image/jpg"><br>
 
-                <label for="color">Store colors</label><br>
+                <label for="color"><%= __("logo")%></label><br>
                 <input id="color" type="color" name="storeColor"onclick="changeColor()"><br>
-                <button id="submit" style="border-color: <%= store.color %>;">Save</button>
+                <button id="submit" style="border-color: <%= store.color %>;"><%= __("save")%></button>
               </form>
               </div>
   <br>

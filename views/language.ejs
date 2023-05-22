@@ -389,7 +389,7 @@ a {
             <span class="material-icons-outlined">search</span>
           </div>
           <div class="header-right">
-            <span class="material-icons-outlined"><a href="/showNotif">otifications</a></span>
+            <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
             <span class="notifications-count"id="noti_number"></span>
 
             <span class="material-icons-outlined">account_circle</span>
@@ -399,76 +399,84 @@ a {
 
       <!-- Sidebar -->
       <aside id="sidebar">
-      <!-- End Sidebar -->
-      <div class="sidebar-title">
-      <div class="sidebar-brand">
-        <img src="<%= store.logo %>"height="55" width="55">
+        <!-- End Sidebar -->
+        <div class="sidebar-title">
+        <div class="sidebar-brand">
+          <img src="<%= store.logo %>" id="_logo" width="55" height="55">
           <h2 id="name"><%= store.name %></h2>
-        </span>
-        <div class="h_line"></div>
-
-        </div>
-        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-      </div>
-      <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-              <a href="/dashboard" target="_blank">
-                  <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-          </li>
-          <li class="sidebar-list-item">
-              <a href="/loyality" target="_blank">
-                  <span class="material-icons-outlined">
-                      card_membership</span> Loyality
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/campaigns" target="_blank">
-                  <span class="material-icons-outlined">campaign</span> Campaigns
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/queseval" target="_blank">
-                  <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-              </a>
-          </li>
-
-          <li class="sidebar-list-item">
-              <a href="/storeset" target="_blank">
-                  <span class="material-icons-outlined">settings</span>  Settings
-              </a>
-          </li>
-      </ul>
-  </aside>
+          </span>
+          <div class="h_line"></div>
+  
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+          <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                  <a href="/dashboard" target="_blank">
+                      <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                  </a>
+              </li>
+              <li class="sidebar-list-item">
+                  <a href="/loyality" target="_blank">
+                      <span class="material-icons-outlined">
+                          card_membership</span> <%= __("sideLoyality")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/campaigns" target="_blank">
+                      <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/queseval" target="_blank">
+                      <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                  </a>
+              </li>
+  
+              <li class="sidebar-list-item">
+                  <a href="/storeset" target="_blank">
+                      <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                  </a>
+              </li>
+          </ul>
+      </aside>
       <!-- Main -->
      
       <main class="main-container">
    
         <div class="main-title">
-            <p class="font-weight-bold">Language Settings</p> 
+            <p class="font-weight-bold"><%= __("language")%></p> 
           </div> <br>
           <div class="lang-set">
             <div class="user-lang">
-             <div  class="text-primary"> <p style="color: #282626">Select the language for users` system:</p> </div> 
-             <select class="p-1 mt-2" name="lang">
-              <option value="en" data-i18n="english" selected>English</option>
-              <option value="ar" data-i18n="arabic">Arabic</option>
-            </select>
+             <div  class="text-primary"> <p style="color: #282626"><%= __("userLang")%></p> </div> 
+             <form action="/language" method="POST">
+              <label for="language">Language:</label>
+              <select id="language" name="language" onchange="this.form.submit()">
+                <option value="en" <% if (locale === 'en') { %>selected<% } %>>English</option>
+                <option value="ar" <% if (locale === 'ar') { %>selected<% } %>>العربية</option>
+              </select>
+            </form>
+          
             
         </div>
         <br>
         <div class="lang-line"></div>
           <div class="manager-lang">
-         <div class="text-primary"> <p style="color:#282626">Select the language for your system: </p> </div>
-            <select class="p-1 mt-2" id="language-selector">
-              <option value="en" data-i18n="english" selected>English</option>
-              <option value="ar" data-i18n="arabic">Arabic</option> 
-            </select> 
+         <div class="text-primary"> <p style="color:#282626"><%= __("managerLang")%> </p> </div>
+         <form action="/language" method="POST">
+          <label for="language">Language:</label>
+          <select id="language" name="language" onchange="this.form.submit()">
+            <option value="en" <% if (locale === 'en') { %>selected<% } %>>English</option>
+            <option value="ar" <% if (locale === 'ar') { %>selected<% } %>>العربية</option>
+          </select>
+        </form>
+      
             <div class="space"></div>
           </div>
-          <button id="submit">Save</button>
+          <button id="submit"><%= __("save")%></button>
         </div>
         </main>
 
@@ -492,11 +500,21 @@ if (unreadNotificationsCount) {
 // Select language
 
 
-const select = document.querySelector('select');
-select.addEventListener('change', function() {
-  const lang = select.value;
-  window.location.href = `/${lang}/signup`; // Redirect to appropriate URL with selected language value
+const langSelect = document.getElementById('language');
+langSelect.addEventListener('change', function() {
+  const selectedLang = langSelect.value;
+  document.cookie = `lang=${selectedLang}; expires=${new Date(Date.now() + 2592000000).toUTCString()}; path=/`;
 });
+window.addEventListener('load', function() {
+  const langCookie = document.cookie.split('; ').find(row => row.startsWith('lang='));
+  if (langCookie) {
+    const langValue = langCookie.split('=')[1];
+    const langSelect = document.getElementById('language');
+    langSelect.value = langValue;
+  }
+});
+
+
 
 
     </script>
