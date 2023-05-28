@@ -74,7 +74,7 @@
 	"image": "image",
 	"code": "Redemption code",
 	"notifTitle": "Notifications",
-	"sms": "sms",
-	"contentLink": "contentLink",
+	"sms": "SMS",
+	"contentLink": "Content link",
 	"send": "send"
 }

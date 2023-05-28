@@ -224,31 +224,36 @@
             </div>
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="
+_self">
                         <span class="material-icons-outlined">dashboard</span> Dashboard
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="
+_self">
                         <span class="material-icons-outlined">
                             card_membership</span> Loyality
                     </a>
                 </li>
     
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="
+_self">
                         <span class="material-icons-outlined">campaign</span> Campaigns
                     </a>
                 </li>
     
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="
+_self">
                         <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
                     </a>
                 </li>
     
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="
+_self">
                         <span class="material-icons-outlined">settings</span>  Settings
                     </a>
                 </li>
