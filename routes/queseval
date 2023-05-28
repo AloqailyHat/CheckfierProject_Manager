@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+ 
+ router.get('/queseval', function(req, res) {
+    const store = res.locals.store;
+    const rows = res.locals.rows;
+    const messages = req.session.messages || {};
+    req.session.messages = {};
+    res.render('queseval', { store, rows, messages });
+  });
+  
+  module.exports = router;
