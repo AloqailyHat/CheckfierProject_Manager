@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -148,7 +148,12 @@ a {
 }
 .dropdown{
   float: right;
- 
+  margin-top: 12px;
+}
+#dropdownMenuButton{
+  border-color: #E1DDDD;
+  border-radius: 5px;
+  background-color: rgb(0,0,0,0);
 }
 .users-card{
   background-color: rgba(217, 217, 217, 0.33);
@@ -160,12 +165,34 @@ a {
   height: 25%;
   margin-top: 5%;
 }
+.all-cards {
+  display: flex;
+  justify-content: space-around;
+}
 
 #name {
   margin-top: -35px;
   margin-left: 60px;
   font-size: 20px;
   font-weight: 700;
+}
+.notifications-count {
+  position: absolute;
+  top: 11px;
+  right: 50px;
+  color: rgb(151, 6, 6);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: #666666;
 }
 
     </style>
@@ -182,6 +209,7 @@ a {
               </div>
               <div class="header-right">
                 <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+                <span class="notifications-count"id="noti_number"></span>
                 <span class="material-icons-outlined">account_circle</span>
               </div>
           </header>
@@ -255,55 +283,80 @@ a {
     </div> 
    </div>
       <div class="all-users row justify-content-space-around">
-        <div class=" col-md-6 ">
+        <div class=" col-md-6 align-items-center">
         <span class="material-icons-outlined " style="font-size: xx-large;color: <%= store.color %>; ">people</span>
            </div>
-        <div class=" col-md-6 ">
-          <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= __("filter")%>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">Action</button>
-              <button class="dropdown-item" type="button">Another action</button>
-              <button class="dropdown-item" type="button">Something else here</button>
-            </div>
-          </div>  
-      </div> 
-      <div class="all-cards row justify-content-space-around">
-        <div class="users-card col-md-4 ">
-          <img src="avatar2.png"height="55" width="55">
-          <div class="text d-block m-3 ">
-            <h5 >Noura Saad</h5>  
-            <p>300 Points</p>
-            <img src="coin.png" height="20" width="20">
+           <div class="col-md-6 ">
+            <select name="users" id="dropdownMenuButton" class="dropdown">
+              <option><%= __("filter")%></option>
+              <option value="oldest">Oldest users</option>
+              <option value="latest">Latest users</option>
+            </select>
+           </div>
+      
+           <div class="all-cards row justify-content-space-around" id="users-container">
+            <!-- Users will be displayed here -->
           </div>
-        </div> 
-      </div>
-        <div class="all-cards row justify-content-space-around">
-          <div class="users-card col-md-4 ">
-            <img src="avatar2.png"height="55" width="55">
-            <div class="text d-block m-3 ">
-              <h5 >Hadeel Alnasser</h5>  
-              <p>50 Points</p>
-              <img src="coin.png" height="20" width="20">
-            </div>
-          </div> 
-     </div>
+          
       </div>
       <script>
-        // Retrieve the count from the browser's local storage
-const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
-if (unreadNotificationsCount) {
-  const notificationsCount = document.getElementById("noti_number");
-  notificationsCount.textContent = unreadNotificationsCount;
-  notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+        //Return notifications status
 
-  // Display the count on the icon in the other page
-  const iconNotificationsCount = document.getElementById('icon_noti_number');
-  iconNotificationsCount.textContent = unreadNotificationsCount;
-  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
-}
+        // Retrieve the count from the browser's local storage
+        const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
+        if (unreadNotificationsCount) {
+          const notificationsCount = document.getElementById("noti_number");
+          notificationsCount.textContent = unreadNotificationsCount;
+          notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
+
+        }
+
+        //Show users based on filter
+
+ const dropdown = document.getElementById('dropdownMenuButton');
+const usersContainer = document.getElementById('users-container');
+
+dropdown.addEventListener('change', () => {
+  console.log("selected changed")
+
+  const value = dropdown.value;
+  if (value === '') {
+    // Clear the users container if the user selects the default option
+    usersContainer.innerHTML = '';
+    console.log(value)
+
+    return;
+  }
+  console.log("before fetch")
+
+  // Make an AJAX request to the server based on the user's choice
+  fetch(`http://localhost:8080/users/filter?filter=${value}`)
+    .then(response => response.json())
+    .then(data => {
+
+      // Display the users in the users container
+      const { users } = data; // Use "users" instead of "oldestUsers" and "latestUsers"
+      usersContainer.innerHTML = '';
+      users.forEach(user => {
+        const card = `
+          <div class="users-card col-md-4 ">
+            <img src="avatar2.png" height="55" width="55">
+            <div class="text d-block m-3">
+              <h5>${user.phone}</h5>
+             <p>${user.points} Points</p>
+              <img src="coin.png" height="20" width="20">
+            </div>
+          </div>
+        `;
+        usersContainer.insertAdjacentHTML('beforeend', card);
+      });
+
+    })
+    .catch(error => console.error(error));
+});
+
+    
+  
       </script>
     </body>
     </html>

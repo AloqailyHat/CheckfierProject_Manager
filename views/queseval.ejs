@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Manager Dashboard</title>
+    <title>Questions&Evaluations</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-7t8u4tC5VP6d6lR2h1CHLw2tJvBW0Jz7Iv6fJhJGc8s0Uiw5O1vH5sBJdE7I1Jp8jzGj1c1V2+q7k9SxY5H2Kw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Custom CSS -->
    <style>
+
     body {
     margin: 0;
     padding: 0;
@@ -331,9 +332,42 @@
 }
 a {
   text-decoration: none;
-  color: #666666;
+  color: #b8b7b7;
 } 
-  
+table, td, th {
+  border: 0.2px solid rgb(199, 199, 199);
+}
+th {
+  text-align: center;
+}
+input {
+  border-style: 20px;
+  border-color: #efefef;
+}
+button {
+  border-style: ridge;
+  border-color: #a5aaad;  
+}
+
+.eval {
+  width: 100px;
+  color: #4c4c4d;
+  border-style: ridge;
+  border-radius: 10px;
+  border-color: #b8b7b7;
+  text-align: center;
+}
+.ques {
+  width: 100px;
+  color: #4c4c4d;
+  border-style: ridge;
+  border-radius: 10px;
+  border-color: #b8b7b7;
+  text-align: center;
+}
+
+
+
    </style>
   </head>
   <body>
@@ -371,31 +405,31 @@ a {
           </div>
           <ul class="sidebar-list">
               <li class="sidebar-list-item">
-                  <a href="/dashboard" target="_blank">
+                  <a href="/dashboard" target="_self">
                       <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
                   </a>
               </li>
               <li class="sidebar-list-item">
-                  <a href="/loyality" target="_blank">
+                  <a href="/loyality" target="_self">
                       <span class="material-icons-outlined">
                           card_membership</span> <%= __("sideLoyality")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/campaigns" target="_blank">
+                  <a href="/campaigns" target="_self">
                       <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/queseval" target="_blank">
+                  <a href="/queseval" target="_self">
                       <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/storeset" target="_blank">
+                  <a href="/storeset" target="_self">
                       <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
                   </a>
               </li>
@@ -411,7 +445,7 @@ a {
         </div> 
         </div>
       <div class="tbl row">
-        <h5><%= __("evaluations")%></h5>
+        <h5 class="eval"><%= __("evaluations")%></h5>
 
         <table class="table table-striped mt-3 mb-5">
           <thead>
@@ -454,7 +488,8 @@ a {
           </tbody>
         </table>
         <br/>
-        <h5><%= __("questions")%></h5>
+
+        <h5 class="ques"><%= __("questions")%></h5>
         <br/>
         <table class="table table-striped mt-3">
           <thead>

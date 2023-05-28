@@ -61,5 +61,17 @@
 	"Points": "النقاط",
 	"queseval": "queseval",
 	"notiSet": "notiSet",
-	"personal": "personal"
+	"personal": "personal",
+	"businessName": "الاسم التجاري",
+	"email": "البريد الإلكتروني",
+	"phone": "رقم الجوال",
+	"password": "كلمة المرور",
+	"signup": "تسجيل",
+	"haveAccount": "لديك حساب؟",
+	"notHaveAccount": "ليس لديك حساب؟",
+	"login": "تسجيل الدخول",
+	"image": "الصورة",
+	"campimg": "الصورة",
+	"code": "رمز الاسترداد",
+	"notifTitle": "الإخطارات"
 }

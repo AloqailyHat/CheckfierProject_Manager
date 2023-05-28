@@ -17,8 +17,12 @@ const rewardSchema = new mongoose.Schema({
       required: true,
       index: true
 
-    }
-  },{collation: 'rewards'});
+    },
+    code: {
+      type: String,
+      required: true,
+    },
+    });
   
-  module.exports = mongoose.model('reward', rewardSchema);
+  module.exports = mongoose.model('reward', rewardSchema, "rewards");
   

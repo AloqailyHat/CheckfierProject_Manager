@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -120,7 +120,7 @@
   }
   .notifications-count {
   position: absolute;
-  top: 11px;
+  top: 10px;
   right: 50px;
   color: rgb(151, 6, 6);
   border-radius: 50%;
@@ -159,48 +159,49 @@ a {
 
      <!-- Sidebar -->
      <aside id="sidebar">
-     <!-- End Sidebar -->
-     <div class="sidebar-title">
-     <div class="sidebar-brand ">
-           <span class="material-img"> <img src="<%= store.logo %>"height="55" width="55" alt="Checkfier"></span>
-           <h2 id="name"><%= store.name %></h2>  
-           <div class="h_line"></div>
+      <!-- End Sidebar -->
+      <div class="sidebar-title">
+      <div class="sidebar-brand">
+        <img src="<%= store.logo %>" id="_logo" height="55" width="55">
+        <h2 id="name"><%= store.name %></h2>
+        </span>
+        <div class="h_line"></div>
 
-         </div>
-         <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-       </div>
-       <ul class="sidebar-list">
-           <li class="sidebar-list-item">
-               <a href="./dashboard.ejs" target="_blank">
-                   <span class="material-icons-outlined">dashboard</span> Dashboard
-               </a>
-           </li>
-           <li class="sidebar-list-item">
-               <a href="./loyality.ejs" target="_blank">
-                   <span class="material-icons-outlined">
-                       card_membership</span> Loyality
-               </a>
-           </li>
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <a href="/dashboard" target="_blank">
+                    <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="/loyality" target="_blank">
+                    <span class="material-icons-outlined">
+                        card_membership</span> <%= __("sideLoyality")%>
+                </a>
+            </li>
 
-           <li class="sidebar-list-item">
-               <a href="./campaigns.ejs" target="_blank">
-                   <span class="material-icons-outlined">campaign</span> Campaigns
-               </a>
-           </li>
+            <li class="sidebar-list-item">
+                <a href="/campaigns" target="_blank">
+                    <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
+                </a>
+            </li>
 
-           <li class="sidebar-list-item">
-               <a href="./queseval.ejs" target="_blank">
-                   <span class="material-icons-outlined">contact_support</span> Questions and Evaluations
-               </a>
-           </li>
+            <li class="sidebar-list-item">
+                <a href="/queseval" target="_blank">
+                    <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
+                </a>
+            </li>
 
-           <li class="sidebar-list-item">
-               <a href="./settings.ejs" target="_blank">
-                   <span class="material-icons-outlined">settings</span>  Settings
-               </a>
-           </li>
-       </ul>
-   </aside>
+            <li class="sidebar-list-item">
+                <a href="/storeset" target="_blank">
+                    <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
+                </a>
+            </li>
+        </ul>
+    </aside>
    </div>
    <div id="userContainer">
    

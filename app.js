@@ -93,19 +93,16 @@ mongoose.connect(mongURL,{
 
  // Configure express-session middleware
  app.post('/language', function(req, res) {
-  const language = req.body.language || 'ar';
+  const language = req.body.language || 'en';
   res.cookie('language', language, { maxAge: 900000, httpOnly: true });
   res.redirect('/dashboard');
 });
 
 app.use(function(req, res, next) {
-  const language = req.cookies.language || 'ar';
+  const language = req.cookies.language || 'en';
   req.setLocale(language);
   next();
 });
-
-
- 
 
 
   //show users api //
@@ -117,7 +114,25 @@ app.use(function(req, res, next) {
      res.status(500).send({ message: error.message });
    }
  });
- 
+
+// Define the /users/filter endpoint
+app.get('/users/filter', async (req, res) => {
+  const filter = req.query.filter;
+  if (filter === 'oldest') {
+    const oldestUsers = await User.find().sort({ createdAt: 1 }).limit(6);
+    res.send({ users:oldestUsers});
+    console.log({ users:oldestUsers})
+
+  } else if (filter === 'latest') {
+    const latestUsers = await User.find().sort({ createdAt: -1 }).limit(6);
+    res.send({users:latestUsers});
+    console.log(latestUsers)
+  } else {
+    res.status(400).send('Invalid filter parameter');
+  }
+});
+
+
 ///
 app.get('/newMembers', async (req, res) => {
   try {
@@ -131,7 +146,6 @@ app.get('/newMembers', async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
-
 
 
 
@@ -184,7 +198,6 @@ app.get('/newMembers', async (req, res) => {
    }
  });
   
-
 
 //  retrieve store data from database
 async function getStoreData(req, res, next) {
@@ -273,11 +286,7 @@ app.get('/advertisement', function(req,res){
   res.render('advertisement',{store: store});
 })
 
-  //routering of rewards view 
-app.get('/rewards', function(req,res){
-  const store = res.locals.store ;
-  res.render('rewards',{store: store});
-})
+
   //routering of points view 
 app.get('/points', function(req,res){
   const store = res.locals.store ;
@@ -463,7 +472,6 @@ app.use(async function(req, res, next) {
   }
 });
 
-
   //routering of campains view 
   app.get('/campaigns', function(req,res){
     const store = res.locals.store ;
@@ -471,6 +479,23 @@ app.use(async function(req, res, next) {
     res.render('campaigns',{store, campaigns});
   })
 
+   // show rewards
+app.use(async function(req, res, next) {
+  try {
+    const rewards = await Reward.find();
+    res.locals.rewards = rewards;
+    next();
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+  //routering of rewards view 
+app.get('/rewards', function(req,res){
+  const store = res.locals.store ;
+  const rewards = res.locals.rewards;
+  res.render('rewards',{store, rewards});
+})
 
 // show evaluations
 

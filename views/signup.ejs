@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -115,21 +115,21 @@
 
     <div class="register">
         <form action="/signup" method="POST">
-        <label>Business name</label>
+        <label><%= __("businessName")%></label>
         <input type="text" placeholder=" enter the name" name="business_name">
         
-        <label>Email</label>
+        <label><%= __("email")%></label>
        
         <input type="email" placeholder=" enter the email" name="email">  
         
-           <label>Phone number</label>
+           <label><%= __("phone")%></label>
            <input type="number" placeholder=" +966" name="phone_number">  
         
-        <label>Password</label>
+        <label><%= __("password")%></label>
         <input type="password" placeholder=" enter the password" name="password">  
           
         <div class="register_button"> <span>
-            <button type="submit"> Sign Up</button>
+            <button type="submit"> <%= __("signup")%></button>
             <svg class="signn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 
@@ -138,10 +138,10 @@
 
            <div class="h_line"></div>
            <div class="account_existed">
-            <label>Already have an account?</label>
+            <label><%= __("haveAccount")%></label>
            
             <div class="login_button">
-            <span><a id="link" href="/login">Log In</a></span>  
+            <span><a id="link" href="/login"><%= __("login")%></a></span>  
             <svg class="sign" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 

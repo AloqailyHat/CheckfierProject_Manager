@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Manager Dashboard</title>
+    <title> Notification</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- Custom CSS -->
@@ -480,6 +480,14 @@ a {
   text-decoration: none;
   color: #666666;
 }
+.mang_icon{ 
+  margin: -40px 0px 52px 510px;
+}
+.user_icon{
+  margin: -45px 0px 52px 510px;
+
+}
+
 
    </style>
   </head>
@@ -518,31 +526,31 @@ a {
           </div>
           <ul class="sidebar-list">
               <li class="sidebar-list-item">
-                  <a href="/dashboard" target="_blank">
+                  <a href="/dashboard" target="_self">
                       <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
                   </a>
               </li>
               <li class="sidebar-list-item">
-                  <a href="/loyality" target="_blank">
+                  <a href="/loyality" target="_self">
                       <span class="material-icons-outlined">
                           card_membership</span> <%= __("sideLoyality")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/campaigns" target="_blank">
+                  <a href="/campaigns" target="_self">
                       <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/queseval" target="_blank">
+                  <a href="/queseval" target="_self">
                       <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/storeset" target="_blank">
+                  <a href="/storeset" target="_self">
                       <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
                   </a>
               </li>
@@ -557,13 +565,19 @@ a {
       <br>
       <br>
       <div class="notif-admin "> <br>
-        
-        <a id="link-admin" href="/notifAdmin" target="_self"><h5> &nbsp; <%= __("adminNotif")%></h5> </a>   
+        <a id="link-admin" href="/notifAdmin" target="_self"><h5> &nbsp; <%= __("adminNotif")%></h5> 
+        <svg class="mang_icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
+            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+          </svg> 
+        </a> 
      </div> 
 
      <div class="notif-user"> <br>
-      
-      <a id="link-user" href="/notifUser" target="_self"><h5> &nbsp; <%= __("userNotif")%></h5> </a>   
+      <a id="link-user" href="/notifUser" target="_self"><h5> &nbsp; <%= __("userNotif")%></h5> 
+        <svg class="user_icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+          <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
+        </svg>
+      </a>   
    </div> 
       
 <br>

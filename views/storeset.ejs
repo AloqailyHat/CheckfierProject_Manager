@@ -377,7 +377,7 @@
       background-color: #FFFFFF;
       width:135px;
       height:35px;
-      margin: 400px 0px 52px 900px;
+      margin: 200px 0px 52px 900px;
       color: #1E1717;
       text-align: center;
       color: #1E1717;
@@ -389,7 +389,8 @@
     h5 {
       color: <%= store.color %>;
     }
-    .notifications-count {
+
+  .notifications-count {
   position: absolute;
   top: 11px;
   right: 50px;
@@ -424,6 +425,7 @@ a {
           </div>
           <div class="header-right">
             <span class="material-icons-outlined"><a href="/showNotif">notifications</a></span>
+            <span class="notifications-count"id="noti_number"></span>
             <span class="material-icons-outlined">account_circle</span>
           </div>
       </header>
@@ -434,7 +436,7 @@ a {
         <!-- End Sidebar -->
         <div class="sidebar-title">
         <div class="sidebar-brand">
-          <img src="<%= store.logo %>" id="_logo">
+          <img src="<%= store.logo %>" id="_logo" height="55" width="55">
           <h2 id="name"><%= store.name %></h2>
           </span>
           <div class="h_line"></div>
@@ -444,31 +446,31 @@ a {
           </div>
           <ul class="sidebar-list">
               <li class="sidebar-list-item">
-                  <a href="/dashboard" target="_blank">
+                  <a href="/dashboard" target="_self">
                       <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
                   </a>
               </li>
               <li class="sidebar-list-item">
-                  <a href="/loyality" target="_blank">
+                  <a href="/loyality" target="_self">
                       <span class="material-icons-outlined">
                           card_membership</span> <%= __("sideLoyality")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/campaigns" target="_blank">
+                  <a href="/campaigns" target="_self">
                       <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/queseval" target="_blank">
+                  <a href="/queseval" target="_self">
                       <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/storeset" target="_blank">
+                  <a href="/storeset" target="_self">
                       <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
                   </a>
               </li>
@@ -543,5 +545,4 @@ if (unreadNotificationsCount) {
    </script>
   </body>
 </html>
-
 

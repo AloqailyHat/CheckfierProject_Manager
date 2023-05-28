@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -504,15 +504,32 @@ const langSelect = document.getElementById('language');
 langSelect.addEventListener('change', function() {
   const selectedLang = langSelect.value;
   document.cookie = `lang=${selectedLang}; expires=${new Date(Date.now() + 2592000000).toUTCString()}; path=/`;
+  if (selectedLang === 'ar') {
+    // If the selected language is Arabic, set the page direction to RTL
+    document.documentElement.setAttribute('dir', 'rtl');
+  } else {
+    // Otherwise, set the page direction to LTR
+    document.documentElement.setAttribute('dir', 'ltr');
+  }
 });
+
 window.addEventListener('load', function() {
   const langCookie = document.cookie.split('; ').find(row => row.startsWith('lang='));
   if (langCookie) {
     const langValue = langCookie.split('=')[1];
     const langSelect = document.getElementById('language');
     langSelect.value = langValue;
+    if (langValue === 'ar') {
+      // If the language cookie is set to Arabic, set the page direction to RTL
+      document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+      // Otherwise, set the page direction to LTR
+      document.documentElement.setAttribute('dir', 'ltr');
+    }
   }
 });
+
+
 
 
 
