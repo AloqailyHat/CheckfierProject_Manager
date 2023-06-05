@@ -285,7 +285,11 @@ app.get('/advertisement', function(req,res){
   const store = res.locals.store ;
   res.render('advertisement',{store: store});
 })
-
+  //routering of personal settings 
+  app.get('/settings', function(req,res){
+    const store = res.locals.store ;
+    res.render('settings',{store: store});
+  })
 
   //routering of points view 
 app.get('/points', function(req,res){
@@ -361,6 +365,7 @@ app.use(async function(req, res, next) {
 
     res.render('loyality',{store, users});
   })
+
 // Upload store data logo, name and color
 const upload = multer();
 
@@ -602,7 +607,63 @@ app.use(function(req, res, next) {
     }
   });
 
+ // logout
+app.post('/logout', (req, res) => {
+  req.session.destroy(error => {
+      if (error) {
+          console.error('Failed to destroy session:', error);
+      }
+      res.redirect('/login');
+  });
+});
 
+ // update signup credintials
+  app.post('/update', async (req, res) => {
+    try {
+      // Extract user input from the request body
+      const { business_name, email, phone_number } = req.body;
+  
+      // Get the current admin's ID from the session
+      const adminId = req.session.adminId;
+  
+      // Find the admin in the database by their ID
+      const admin = await Admin.findById(adminId);
+  
+      // Update the admin's data with the new values
+      admin.business_name = business_name;
+      admin.email = email;
+      admin.phone_number = phone_number;
+  
+      await admin.save();
+  
+      // Send a success response to the client
+      res.send("<script>alert('User updated successfully ✔'); window.location.href='/settings';</script>");
+  
+    } catch (error) {
+      res.send("<script>alert('Can not updating user'); window.location.href='/settings';</script>");
+      ;
+  
+      // Send an error response to the client
+      res.status(500).json({
+        success: false,
+        message: 'Error updating user'
+      });
+    }
+  });
+
+ // change password
+  app.post('/changePassword', async (req, res) => {
+    const newPassword = req.body.newPassword;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+    const adminId = req.session.adminId;
+    const admin = await Admin.findById(adminId);
+    admin.password = hashedPassword;
+    await admin.save();
+  
+    res.send("<script>alert('Password updated successfully ✔'); window.location.href='/settings';</script>");
+  });
+  
   ///// send-sms
   app.post('/send-sms', async (req, res) => {
     const messageBody = req.body['message-body'];
@@ -661,17 +722,24 @@ app.get('/showNotif', (req, res) => {
   });
 });
 //// Notifications
-// Retrieve all notifications
+// Save notifications preferences
+app.post('/update-notif-preferences', (req, res) => {
+  const { evalNotif, quesNotif, redeemNotif, pointsNotif } = req.body;
+  console.log(evalNotif,quesNotif,redeemNotif, pointsNotif)
+  res.status(200).send('Notification preferences updated successfully!');
+});
+
+// Return the notifications
 app.get('/notifications', async (req, res) => {
   try {
     const notifications = await Notification.find().sort({ created: -1 }).exec();
     res.json({ success: true, notifications: notifications });
   } catch (error) {
     console.error('Error retrieving notifications:', error);
-    res.json({ success: false, message: 'Error retrieving notifications.' });
-  }
+    res.json({ success: false, message: 'Error retrieving notifications.' });
+  }
 });
-
+//
 app.put('/notifications/:id/read', async (req, res) => {
   const { id } = req.params;
 
