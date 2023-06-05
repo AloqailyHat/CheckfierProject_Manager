@@ -342,6 +342,33 @@
 }
 
 
+#notifications-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#notifications-table th,
+#notifications-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#notifications-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  text-align: left;
+}
+
+#notifications-table .unread {
+  font-weight: bold;
+  background-color: #ffe5e5;
+  cursor: pointer;
+}
+
+#notifications-table .unread:hover {
+  background-color: #ffcccc;
+}
    </style>
   </head>
   <body>
@@ -378,36 +405,31 @@
           </div>
           <ul class="sidebar-list">
               <li class="sidebar-list-item">
-                  <a href="/dashboard" target="
-_self">
+                  <a href="/dashboard" target="_self">
                       <span class="material-icons-outlined">dashboard</span> <%= __("sideDash")%>
                   </a>
               </li>
               <li class="sidebar-list-item">
-                  <a href="/loyality" target="
-_self">
+                  <a href="/loyality" target="_self">
                       <span class="material-icons-outlined">
                           card_membership</span> <%= __("sideLoyality")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/campaigns" target="
-_self">
+                  <a href="/campaigns" target="_self">
                       <span class="material-icons-outlined">campaign</span> <%= __("sideCamp")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/queseval" target="
-_self">
+                  <a href="/queseval" target="_self">
                       <span class="material-icons-outlined">contact_support</span> <%= __("sideEval")%>
                   </a>
               </li>
   
               <li class="sidebar-list-item">
-                  <a href="/storeset" target="
-_self">
+                  <a href="/storeset" target="_self">
                       <span class="material-icons-outlined">settings</span>  <%= __("sideSet")%>
                   </a>
               </li>
@@ -419,15 +441,22 @@ _self">
     <div class="main-title">
       <p class="font-weight-bold"><%= __("notifTitle")%></p>
     </div>
-    <div id="notifications-list" class="notifications-list">
-      <!-- notifications will be added here -->
-    </div>
-  
-      
+            <!-- Notifications will be added here -->
+  <table id="notifications-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Content</th>
+      </tr>
+    </thead>
+    <tbody id="notifications-table-body"></tbody>
+  </table>      
     </div>
   
    <script>
-   function updateNotificationsCount() {
+
+  
+function updateNotificationsCount() {
   // Fetch the notifications from the server
   fetch('http://localhost:8080/notifications')
     .then(response => response.json())
@@ -436,14 +465,60 @@ _self">
         const notifications = data.notifications;
         const unreadNotifications = notifications.filter(notification => !notification.read);
         const unreadCount = unreadNotifications.length;
+        // Display the notifications in a table
+        const notificationsTableBody = document.getElementById('notifications-table-body');
+        notificationsTableBody.innerHTML = ''; // Clear existing rows
+        notifications.forEach(notification => {
+          const row = document.createElement('tr');
+          let content;
+          if (notification.type === 'question') {
+            content = `Received new question: ${notification.content.question}`;
+            row.onclick = function() {
+              window.location.href = '/queseval';
+            }
+          } else if (notification.type === 'redeem') {
+            content = `User ${notification.content.userPhone} Redeemed: ${notification.content.points} points`;
+            row.onclick = function() {
+              window.location.href = '/queseval';
+            }
+          } else if (notification.type === 'rating') {
+            content = `User ${notification.content.phone} Rating for: ${notification.content.rating} rating, and review: ${notification.content.comment}`;  
+          } else {
+            content = notification.message;
+          }
+          row.innerHTML = `
+            <td>${notification.type}</td>
+            <td>${content}</td>
+          `;
+          if (!notification.read) {
+            row.classList.add('unread');
+            // Add a click event listener to mark the notification as read
+            row.addEventListener('click', () => {
+              const notificationId = notification._id;
 
-        // Display the count of unread notifications to the user
-        const notificationsCount = document.getElementById('noti_number');
-        notificationsCount.textContent = unreadCount;
-        notificationsCount.style.display = unreadCount > 0 ? 'block' : 'none';
+              // Send an AJAX request to update the notification's read field
+              const xhr = new XMLHttpRequest();
+              xhr.open('PUT', `/notifications/${notificationId}/read`);
+              xhr.send();
 
-        // Store the count in the browser's local storage
-        localStorage.setItem('unreadNotificationsCount', unreadCount);
+              // Update the notification in the local array and on the page
+              notification.read = true;
+              row.classList.remove('unread');
+
+              // Update the count of unread notifications
+              const notificationsCount = document.getElementById('noti_number');
+              notificationsCount.textContent = parseInt(notificationsCount.textContent) - 1;
+              notificationsCount.style.display = notificationsCount.textContent > 0 ? 'block' : 'none';
+              localStorage.setItem('unreadNotificationsCount', notificationsCount.textContent);
+
+              // Navigate to appropriate page
+              window.location.href = '/queseval';
+              updateNotificationsCount(); // Reload notifications after navigating
+            });
+          }
+          
+          notificationsTableBody.appendChild(row);
+        });
       } else {
         console.error('Failed to fetch notifications:', data.error);
       }
@@ -451,9 +526,7 @@ _self">
     .catch(error => console.error('Error fetching notifications:', error));
 }
 
-// Call the updateNotificationsCount function once on page load
 updateNotificationsCount();
-
 // Update the count of unread notifications every 30 seconds
 setInterval(updateNotificationsCount, 30000);
 
@@ -465,79 +538,7 @@ if (unreadNotificationsCount) {
   notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 }
 
-// Next, modify the client-side code to use the count of unread notifications
-fetch('http://localhost:8080/notifications')
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      const notifications = data.notifications;
-      const unreadCount = parseInt(unreadNotificationsCount); // Parse the count from local storage
 
-      // Display the count of unread notifications to the user
-      const notificationsCount = document.getElementById('noti_number');
-      notificationsCount.textContent = unreadCount;
-      notificationsCount.style.display = unreadCount > 0 ? 'block' : 'none';
-
-      // Display the notifications in a list
-      const notificationsList = document.getElementById('notifications-list');
-      notifications.forEach(notification => {
-        const listItem = document.createElement('div');
-        listItem.className = 'notification-item';
-        let content;
-        if (notification.type === 'question') {
-          content = `Received new question: ${notification.content.question}`;
-          listItem.onclick = function() {
-            window.location.href = '/queseval';
-          }
-
-        } else if (notification.type === 'redeem') {
-          content = `User ${notification.content.userPhone} Redeemed: ${notification.content.points} points`;
-          listItem.onclick = function() {
-            window.location.href = '/queseval';
-          }
-        } else if (notification.type === 'rating') {
-          content = `User ${notification.content.phone} Rating for: ${notification.content.rating} rating, and review: ${notification.content.comment}`;  
-        } else {
-          content = notification.message;
-        }
-        listItem.innerHTML = `
-          <div class="notification-content">
-            <p class="notification-text">${content}</p>
-          </div>
-        `;
-
-        // Add a CSS class to the list item element for each unread notification
-        if (!notification.read) {
-          listItem.classList.add('unread');
-
-          listItem.addEventListener('click', () => {
-            const notificationId = notification._id;
-
-            // Send an AJAX request to update the notification's read field
-            const xhr = new XMLHttpRequest();
-            xhr.open('PUT', `/notifications/${notificationId}/read`);
-            xhr.send();
-
-            // Update the notification in the local array and on the page
-            notification.read = true;
-            listItem.classList.remove('unread');
-
-            // Update the count of unread notifications
-            const notificationsCount = document.getElementById('noti_number');
-            notificationsCount.textContent = parseInt(notificationsCount.textContent) - 1;
-            notificationsCount.style.display = notificationsCount.textContent > 0 ? 'block' : 'none';
-            localStorage.setItem('unreadNotificationsCount', notificationsCount.textContent);
-          });
-        }
-
-        notificationsList.appendChild(listItem);
-      });
-
-    } else {
-      console.error('Failed to fetch notifications:', data.error);
-    }
-  })
-  .catch(error => console.error('Error fetching notifications:', error));
 
 
    </script>
