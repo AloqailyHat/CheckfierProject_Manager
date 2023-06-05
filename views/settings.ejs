@@ -78,7 +78,7 @@
   #sidebar {
     grid-area: sidebar;
     height: 100%;
-    background-color: #8E6FB2;
+    background-color: <%= store.color %>;
     color: #E9E5EE;
     overflow-y: auto;
     -webkit-transition: all 0.5;
@@ -289,6 +289,7 @@
     color: #1E1717;
     border-radius:10px;
     height: 500px;
+    margin-left: 55px;
   }
 
   .change-acc{
@@ -321,6 +322,22 @@
   border-style: solid;
   border-color: #d5d4d5;
   line-height: 30px;
+}
+ 
+.save-btn1{
+  background-color: #FFFFFF;
+  width:100px;
+  height:32px;
+  text-align: center;
+  border-radius:10px;
+  border-style: solid;
+  border-color: #d5d4d5;
+  line-height: 30px;
+}
+#submit-btn{
+  background-color: rgb(0,0,0,0);
+  border: none;
+  padding: 0px;
 }
 #link{
   color: #1E1717;
@@ -390,6 +407,26 @@ h5 {
 a {
   text-decoration: none;
   color: #666666;
+}
+.popup{
+  display: none;
+  position: relative;
+  background-color:#FFFFFF ;
+  height: 300px;
+  width: 300px;
+  margin-left: 400px;
+  color: black;
+  margin-top: 65px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.popup input{
+  width: auto;
+  display: block;
+  border-radius:10px;
+  border-style: ridge; 
+  margin-top: 5px;
 }
 
 
@@ -469,41 +506,92 @@ a {
             <div class="rewards-card">
               <span class="material-icons-outlined" ></span>
               
-              <h5> Personal settings</h5> 
+              <h5> <%= __("personalSet")%></h5> 
                 <br>
                 <div class="change-acc">
-                  <form>
-                    <input type="text" placeholder=" change the name" name="business_name">
+                  <form method="POST" action="/update">
+                    <input type="text" placeholder='<%= __("changeName")%>' name="business_name">
                                      
-                    <input type="email" placeholder=" change the email" name="email">  
+                    <input type="email" placeholder='<%= __("changeEmail")%>' name="email">  
                     
-                       <input type="number" placeholder=" change your number" name="phone_number">  
+                       <input type="number" placeholder='<%= __("changeMobile")%>' name="phone_number">  
                       
                        <div class="save-btn">
-                        <span><a id="link" href="#">Save</a></span> 
+                        <span><button type="submit" id="submit-btn" href="#"><%= __("save")%></button></span> 
                         </div>
-                          <div class="log-out"> 
-                          <span><a id="link" href="#">Log out</a></span>  
+                          <div class="log-out" id="logout-link"> 
+                          <span><a id="link" href="#"><%= __("logout")%></a></span>  
                           </div>
 
                           <div class="change-pass">
-                            <span><a id="link" href="#">Change password</a></span>  
+                            <span><a id="change-pass" href="#"><%= __("changepas")%></a></span>  
                             </div>
 
+
                             <div class="store-set">
-                              <span><a id="link" href="/storeset">Store settings</a></span> 
+                              <span><a id="link" href="/storeset"><%= __("store")%></a></span> 
                               </div>
 
                       </form>
-                </div>   
+                </div> 
+                <div id="popup" class="popup">
+                  <form id="password-form" method="POST" action="/changePassword" >
+                    <label for="new-password"><%= __("Newpass")%></label>
+                    <br/>
+                    <input type="password" id="new-password" name="newPassword">
+                    <br/>
+                    <div class="save-btn1">
+                    <button type="submit" id="submit-btn"><%= __("save")%></button>
+                    </div>
+                  </form>
+                </div>  
             </div>
          </div>
+        
       </main>
       <!-- End Main -->
     </div>
 
     <!-- Custom JS -->
    <script>
+// change password open and close popup
+  const change = document.getElementById('change-pass');
+  const popup = document.getElementById('popup');
+  const form = document.getElementById('password-form');
+
+  change.addEventListener('click', event => {
+    event.preventDefault();
+    popup.style.display = 'flex';
+  });
+
+  form.addEventListener('submit', async event => {
+    // Hide the popup
+    popup.style.display = 'none';
+  });
+
+// logout
+  function logout() {
+    fetch('http://localhost:8080/logout', {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = '/login';
+        } else {
+            console.error('Failed to logout');
+        }
+    }).catch(error => {
+        console.error('Failed to logout:', error);
+    });
+}
+
+//
+const logoutLink = document.getElementById('logout-link');
+logoutLink.addEventListener('click', function(event) {
+    event.preventDefault(); // prevent the link from navigating to "#"
+    logout();
+});
+
+
     // Retrieve the count from the browser's local storage
 const unreadNotificationsCount = localStorage.getItem('unreadNotificationsCount');
 if (unreadNotificationsCount) {
@@ -511,10 +599,6 @@ if (unreadNotificationsCount) {
   notificationsCount.textContent = unreadNotificationsCount;
   notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 
-  // Display the count on the icon in the other page
-  const iconNotificationsCount = document.getElementById('icon_noti_number');
-  iconNotificationsCount.textContent = unreadNotificationsCount;
-  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 }
    </script>
   </body>
