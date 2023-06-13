@@ -76,5 +76,15 @@
 	"notifTitle": "Notifications",
 	"sms": "SMS",
 	"contentLink": "Content link",
-	"send": "send"
+	"send": "send",
+	"personalSet":"Personal settings",
+    "changepas": "Change password",
+	"logout": "Logout",
+	"changeName": "Change the name",
+	"changeEmail": "Change the email",
+	"changeMobile": "Change the phone",
+	"Newpass": "New password"
+
+
+
 }

@@ -462,6 +462,7 @@ _self">
   <div class="notif-set">
     <div class="panel-body">
       <div class="table-responsive">
+        <form id="notification-form" method="POST">
         <table class="table text-nowrap">
           <thead> 
             <tr>
@@ -474,7 +475,7 @@ _self">
             <tr>
               <td> <%= __("evalNotif")%></td>
               <td>
-                <input id="rating-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+                <input id="rating-checkbox" type="checkbox" data-action="#" data-method="post" data-param="evalNotif" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
               <td>
                 <input type="checkbox" data-action="#" data-method="post" data-param="email:store-rating" data-shortname="store-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
@@ -483,7 +484,7 @@ _self">
             <tr>
               <td> <%= __("quesNotif")%> </td>
               <td>
-                <input id="question-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+                <input id="question-checkbox" type="checkbox" data-action="#" data-method="post" data-param="quesNotif" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
               <td>
                 <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-rating" data-shortname="customer-rating" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
@@ -492,7 +493,7 @@ _self">
             <tr>
               <td> <%= __("redeemNotif")%> </td>
               <td>
-                <input id="redeem-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+                <input id="redeem-checkbox" type="checkbox" data-action="#" data-method="post" data-param="redeemNotif" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
               <td>
                 <input type="checkbox" data-action="#" data-method="post" data-param="email:customer-redeems" data-shortname="customer-redeems" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
@@ -501,7 +502,7 @@ _self">
             <tr>
               <td> <%= __("pointsNotif")%> </td>
               <td>
-                <input id="points-checkbox" type="checkbox" data-action="#" data-method="post" data-param="app:points-rewards" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
+                <input id="points-checkbox" type="checkbox" data-action="#" data-method="post" data-param="pointsNotif" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
               </td>
               <td>
                 <input type="checkbox" data-action="#" data-method="post" data-param="email:points-rewards" data-shortname="points-rewards" data-on-value="active" data-off-value="inactive" class="switchery ajax" checked>
@@ -509,6 +510,8 @@ _self">
             </tr>
           </tbody>
         </table>
+        <button type="submit"><%= __("save")%></button>
+        </form>
         <br>
       </div>
     </div>
@@ -527,28 +530,32 @@ if (unreadNotificationsCount) {
   const notificationsCount = document.getElementById("noti_number");
   notificationsCount.textContent = unreadNotificationsCount;
   notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
-
-  // Display the count on the icon in the other page
-  const iconNotificationsCount = document.getElementById('icon_noti_number');
-  iconNotificationsCount.textContent = unreadNotificationsCount;
-  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 }
 
-// Get the checkbox values
-const pointsCheckbox = document.getElementById('points-checkbox');
-const redeemCheckbox = document.getElementById('redeem-checkbox');
-const ratingCheckbox = document.getElementById('rating-checkbox');
-const questionCheckbox = document.getElementById('question-checkbox');
-const includePoints = pointsCheckbox.checked;
-const includeRedeem = redeemCheckbox.checked;
-const includeRating = ratingCheckbox.checked;
-const includeQuestion = questionCheckbox.checked;
+// Get checkbox data
+const form = document.getElementById('notification-form');
+  form.addEventListener('submit', event => {
+    event.preventDefault();
 
-// Construct the URL with the checkbox values as parameters
-const url = `http://localhost:8080/showNotif?includePoints=${includePoints}&includeRedeem=${includeRedeem}&includeRating=${includeRating}&includeQuestion=${includeQuestion}`;
-// Set the href attribute of the link or button to the URL with the checkbox values as parameters
-document.getElementById('notif-link').href = url;
+    // Get the current state of the checkbox inputs
+    const evalNotif = document.querySelector('input[data-param="evalNotif"]').checked;
+    const quesNotif = document.querySelector('input[data-param="quesNotif"]').checked;
+    const redeemNotif = document.querySelector('input[data-param="redeemNotif"]').checked;
+    const pointsNotif = document.querySelector('input[data-param="pointsNotif"]').checked;
 
+    // Send the notification preferences to the server via an AJAX request
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/update-notif-preferences');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        alert('Notification preferences updated successfully!');
+      } else {
+        alert('Error updating notification preferences');
+      }
+    };
+    xhr.send(JSON.stringify({ evalNotif, quesNotif, redeemNotif, pointsNotif }));
+  });
 
  </script>
 <!-- End Scripts -->

@@ -22,6 +22,8 @@ const rewardSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
     });
   
   module.exports = mongoose.model('reward', rewardSchema, "rewards");

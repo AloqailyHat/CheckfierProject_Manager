@@ -22,7 +22,9 @@ const notificationSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
-  }
+  },
+  store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
 });
 
 module.exports = mongoose.model('notification', notificationSchema, 'notifications');

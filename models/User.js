@@ -5,6 +5,8 @@ const UserSchema = new mongoose.Schema({
   status: {type: String },
   date: {type: Date},
   pointsExpiration: Date,
+  store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
 }, {timestamps: true}) 
 
 this.phone = this.phone ? this.phone : undefined;

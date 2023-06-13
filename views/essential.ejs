@@ -518,18 +518,16 @@ a {
                 <p class="font-weight-bold"><%= __("essential")%></p>
               </div>
               <div class="info_form">
-              <form action="/upload" method="POST" enctype="multipart/form-data">
-                <label for="name" ><%= __("storeName")%></label><br>
-                <input type="text" name="storeName" id="store_name" style="border-color: <%= store.color %>;"><br>
-                <label for="logo"><%= __("logo")%></label><br>
-               
-
-                <input type="file" id="image_input" name="logo" accept="image/png, image/jpg"><br>
-
-                <label for="color"><%= __("logo")%></label><br>
-                <input id="color" type="color" name="storeColor"onclick="changeColor()"><br>
-                <button id="submit" style="border-color: <%= store.color %>;"><%= __("save")%></button>
-              </form>
+                <form action="/create-store" method="POST" enctype="multipart/form-data">
+                  <label for="name">Store Name</label><br>
+                  <input type="text" name="storeName" id="store_name" style="border-color: <%= store.color %>;"><br>
+                  <label for="logo">Logo</label><br>
+                  <input type="file" id="image_input" name="logo" accept="image/png, image/jpg"><br>
+                  <label for="color">Color</label><br>
+                  <input id="color" type="color" name="storeColor" ><br>
+                  <button id="submit" style="border-color: <%= store.color %>;">Save</button>
+                </form>
+                
               </div>
   <br>
    <!--Scripts-->
@@ -541,10 +539,6 @@ if (unreadNotificationsCount) {
   notificationsCount.textContent = unreadNotificationsCount;
   notificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 
-  // Display the count on the icon in the other page
-  const iconNotificationsCount = document.getElementById('icon_noti_number');
-  iconNotificationsCount.textContent = unreadNotificationsCount;
-  iconNotificationsCount.style.display = unreadNotificationsCount > 0 ? 'block' : 'none';
 }
    
   </script>

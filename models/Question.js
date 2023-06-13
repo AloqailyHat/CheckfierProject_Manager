@@ -17,7 +17,9 @@ const questionSchema = new mongoose.Schema({
   notified: {
     type: Boolean,
     default: false
-  }
+  },
+  store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
 });
 questionSchema.methods.updateAnswers = async function(answers) {
   this.answer = answers;

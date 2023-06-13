@@ -487,7 +487,9 @@ a {
             const type = document.getElementById('rtype').value;
             const date = document.getElementById('date').value;
             const points = document.getElementById('points').value;
-            const data = { name, type, date, points };
+            const code = document.getElementById('code').value;
+
+            const data = { name, type, date, points, code };
             fetch('http://localhost:8080/rewards',{
               method: 'POST',
               headers: {

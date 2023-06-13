@@ -428,7 +428,14 @@ a {
   border-style: ridge; 
   margin-top: 5px;
 }
-
+.store-link {
+  position: relative;
+  margin-top: 15%;
+  left: 71%;
+  font-size: large;
+  width:600px ;
+  color: rgb(2, 2, 139);
+}
 
    </style>
   </head>
@@ -510,6 +517,8 @@ a {
                 <br>
                 <div class="change-acc">
                   <form method="POST" action="/update">
+                    <a class="store-link" href="https://checkfier-user.herokuapp.com/store/<%= store.name %>">Click here to acces your store clink</a>
+
                     <input type="text" placeholder='<%= __("changeName")%>' name="business_name">
                                      
                     <input type="email" placeholder='<%= __("changeEmail")%>' name="email">  

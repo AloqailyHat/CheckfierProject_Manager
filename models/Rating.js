@@ -5,7 +5,9 @@ const ratingSchema = new mongoose.Schema({
     comment: String,
     phone: Number,
     date: String,
-    reply:String
+    reply:String,
+    store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
 
     
   });
