@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,100 +10,106 @@
     <!-- Custom CSS -->
 <style>
         
-        body{
-            background: linear-gradient(
-                to right,
-                <%= store.color %> 0%,
-                <%= store.color %> 35%,
-                #ECE4F4 35%,
-                #ECE4F4 100%
-            );
-        }
-       
-        .signn{
-            color: #ebebeb;
-            margin: -35px 0px 22px 170px;
-            width:20px;
-            height:32px;
-        }
-        .sign{
-            color: #ECE4F4;
-            margin: -40px 0px 22px 170px;
-            width:20px;
-            height:32px;
-        }
-     #login-page { 
-            color: #ffff;  
-            text-decoration: none; 
-             }
-        .register{
-            margin: 100px 30px 0px 10px;
-            width: 320px;
-            height:330px;
-            border-radius: 25px;
-            padding: 10px 0px 0px 4px;
-            color: white;
-            font-size: 15px;
-            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        }
+    body{
+        background: linear-gradient(
+            to right,
+            <%= store.color %> 1%,
+            <%= store.color %> 35%,
+            #ECE4F4 35%,
+            #ECE4F4 100%
+            
+        );
+    }
+   
+    .signn{
+        color: #ebebeb;
+        margin: -35px 0px 32px 270px;
+        width:20px;
+        height:32px;
+    }
+    .sign{
+        color: #ECE4F4;
+        margin: -40px 0px 22px 170px;
+        width:20px;
+        height:32px;
+    }
+ #login-page { 
+        color: #ffff;  
+        text-decoration: none; 
+         }
+    .register{
+        margin: 100px 30px 0px 10px;
+        width: 320px;
+        height:330px;
+        border-radius: 25px;
+        padding: 10px 0px 0px 4px;
+        color: white;
+        font-size: 15px;
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
 
-        .register input, select, label{ 
-           position:relative;
-            width:205px;
-            height:32px;
-            margin: 5px 0px 5px 97px;
-            border: 0px;
-            border-radius:10px;
-        }
-        
-       
-        .register_button{
-          background-color: #FDBD06;
-          width:195px;
-          height:32px;
-          margin: 40px 0px 5px 100px;
-          text-align: center;
-            line-height: 30px;
-        }
-       .h_line{
-        border-bottom: 0.2px ridge #ffff;
-        width: 300px;
-        margin: 20px 0px 15px 45px;
-       }
-       .account_existed label{
-        margin: 1px 0px 2px 120px;
-       }
+    .register input, select, label{ 
+       position:relative;
+       color: white;
+        width:205px;
+        height:32px;
+        margin: -7px 0px 5px 100px;
+        border: 0px;
+        border-radius:10px;
+    }
+    
+   
+    .register_button{
+      background-color: #FDBD06;
+      width:195px;
+      height:32px;
+      color: #fff;
+      margin: 60px 0px 5px 100px;
+      text-align: center;
+     line-height: 30px;
+     border-color: #FDBD06;
+    }
+   .h_line{
+    border-bottom: 0.2px ridge #ffff;
+    width: 300px;
+    margin: -20px 0px 15px 45px;
+   }
+   .account_existed label{
+    margin: 1px 0px 2px 120px;
+   }
 
-       .login_button{
-          background-color: #fdbb0631;
-          width:195px;
-          height:32px;
-          margin: 15px 0px 15px 100px;
-          text-align: center;
-          border-style: solid;
-           border-color: #FDBD06;
-           text-align: center;
-            line-height: 30px;
-        }
+   .login_button{
+      background-color: #fdbb0631;
+      width:195px;
+      height:32px;
+      margin: 15px 0px 15px 100px;
+      text-align: center;
+      border-style: solid;
+       border-color: #FDBD06;
+       text-align: center;
+        line-height: 30px;
+    }
 
-        .imgqo{
-            margin-top: -620px;
-            margin-left: 550px; 
-        }
-        
-        .qoute{
-           color: <%= store.color %>;
-           margin-top: -120px;
-           margin-left: 850px;
-           font-size: Small;
-        }
-        #link{
-            color: #ffffff;
-        }
-        #logo{
-            margin-top: 23px;
-            margin-left: 140px;
-        }
+    .imgqo{
+        margin-top: -620px;
+        margin-left: 550px; 
+    }
+    
+    .qoute{
+       color: <%= store.color %>;
+       margin-top: -120px;
+       margin-left: 850px;
+       font-size: Small;
+    }
+    #link{
+        color: #ffffff;
+        text-decoration: none;
+    }
+    #logo{
+        margin-top: 120px;
+        margin-left: 140px;
+    }
+   
        
        
     </style>
@@ -114,22 +120,24 @@
     
 
     <div class="register">
+        <div class="busi">
         <form action="/signup" method="POST">
-        <label><%= __("businessName")%></label>
-        <input type="text" placeholder=" enter the name" name="business_name">
-        
-        <label><%= __("email")%></label>
+        <label id="busi_name">Business name</label>
+        <input type="text" placeholder=" enter name" name="business_name">
+    </div>
+
+        <label>Email</label>
        
-        <input type="email" placeholder=" enter the email" name="email">  
+        <input type="email" placeholder=" enter email" name="email">  
         
-           <label><%= __("phone")%></label>
+           <label>Phone number</label>
            <input type="number" placeholder=" +966" name="phone_number">  
         
-        <label><%= __("password")%></label>
-        <input type="password" placeholder=" enter the password" name="password">  
+        <label>Password</label>
+        <input type="password" placeholder=" enter password" name="password">  
           
-        <div class="register_button"> <span>
-            <button type="submit"> <%= __("signup")%></button>
+        <div> <span>
+            <button type="submit" class="register_button"> Sign Up</button>
             <svg class="signn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 
@@ -138,10 +146,10 @@
 
            <div class="h_line"></div>
            <div class="account_existed">
-            <label><%= __("haveAccount")%></label>
+            <label>Already have an account?</label>
            
             <div class="login_button">
-            <span><a id="link" href="/login"><%= __("login")%></a></span>  
+            <span><a id="link" href="/login">Log In</a></span>  
             <svg class="sign" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg> 

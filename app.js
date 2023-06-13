@@ -770,8 +770,9 @@ app.post('/update-notif-preferences', (req, res) => {
 // Return the notifications
 app.get('/notifications', async (req, res) => {
   try {
-    const store_id = req.cookies.store;
-    const notifications = await Notification.find({store: store_id}).sort({ created: -1 }).exec();
+    const store_id = req.cookies.store
+    console.log(store_id)
+    const notifications = await Notification.find({type: store_id}).sort({ created: -1 }).exec();
     res.json({ success: true, notifications: notifications });
   } catch (error) {
     console.error('Error retrieving notifications:', error);
